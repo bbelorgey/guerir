@@ -145,10 +145,9 @@ header h1 em { font-style: italic; color: var(--gold); }
 .tabs-rail::-webkit-scrollbar { display: none; }
 .tabs-inner {
   display: flex;
-  padding: 0 .8rem;
-  min-width: max-content;
 }
 .tab {
+  flex: 1;
   font-size: .66rem;
   letter-spacing: .1em;
   text-transform: uppercase;
@@ -157,11 +156,12 @@ header h1 em { font-style: italic; color: var(--gold); }
   color: var(--muted);
   background: none;
   border: none;
-  padding: .88rem 1rem;
+  padding: .88rem .4rem;
   cursor: pointer;
   border-bottom: 2px solid transparent;
   transition: all .2s;
   white-space: nowrap;
+  text-align: center;
 }
 .tab:hover { color: var(--text); }
 .tab.on { color: var(--forest); border-bottom-color: var(--sage); }
