@@ -521,13 +521,15 @@ main {
 
 /* ─── Réduction proportionnelle sur petit mobile ─── */
 @media (max-width: 479px) {
+  /* colonne gauche = taille naturelle, colonne texte = tout le reste */
+  .breath-guide  { grid-template-columns: auto auto 1fr; }
   .session-arc   { width: 116px; height: 116px; }
   .breath-orb    { width: 68px;  height: 68px; }
   .breath-core   { width: 34px;  height: 34px; }
   .breath-phase  { font-size: 1.05rem; }
   .t-btn.stone-main { font-size: .58rem; padding: .4rem .72rem; }
   .t-btn.stone-sec  { font-size: .52rem; padding: .3rem .5rem; }
-  .stones-col { gap: .38rem; }
+  .stones-col { gap: .38rem; padding-right: .2rem; }
 }
 .arc-track { fill: none; stroke: rgba(0,0,0,.05); stroke-width: 1; }
 .arc-fill {
