@@ -1374,7 +1374,7 @@ async function playBowl(isInhale) {
   if (!soundOn || !audioCtx) return;
   try {
     if (audioCtx.state !== 'running') await audioCtx.resume();
-    makeBowl(isInhale ? 216 : 162, audioCtx.currentTime, isInhale ? 0.20 : 0.17);
+    makeBowl(isInhale ? 432 : 216, audioCtx.currentTime, isInhale ? 0.15 : 0.20);
   } catch(e) { console.warn('audio:', e); }
 }
 
