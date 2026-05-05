@@ -521,9 +521,9 @@ main {
 
 /* ─── Réduction proportionnelle sur petit mobile ─── */
 @media (max-width: 479px) {
-  /* tabs : tous visibles sans scroll sur 360px */
-  .tab { padding: .78rem .38rem; font-size: .56rem; letter-spacing: 0; }
-  .tabs-inner { padding: 0 .2rem; }
+  /* tabs : étirés sur toute la largeur */
+  .tabs-inner { padding: 0; min-width: 0; }
+  .tab { flex: 1; padding: .78rem .2rem; font-size: .56rem; letter-spacing: 0; text-align: center; }
 
   /* colonne gauche = taille naturelle, colonne texte = tout le reste */
   .breath-guide  { grid-template-columns: auto auto 1fr; }
