@@ -1,4 +1,4 @@
-const CACHE = 'rc-calme-v1';
+const CACHE = 'rc-calme-v2';
 
 const SHELL = [
   './index.html',
