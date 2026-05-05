@@ -491,11 +491,10 @@ main {
 
 .breath-phase {
   font-family: 'Playfair Display', serif;
-  font-size: 1.45rem; /* taille fixe = max inhale mobile */
+  font-size: 1.45rem;
   font-style: italic;
   color: var(--muted);
-  min-width: 5.5rem;
-  transform: scale(0.76); /* repos ≈ 1.1rem */
+  transform: scale(0.76);
   transform-origin: center center;
   transition: transform 5s cubic-bezier(0.37, 0, 0.22, 1), opacity .35s ease;
 }
@@ -511,10 +510,13 @@ main {
   grid-row: 1;
   align-self: center;
   justify-self: center;
-  width: 160px; height: 160px;
+  width: 140px; height: 140px;
   transform: rotate(-90deg);
   pointer-events: none;
   overflow: visible;
+}
+@media (min-width: 640px) {
+  .session-arc { width: 160px; height: 160px; }
 }
 .arc-track { fill: none; stroke: rgba(0,0,0,.05); stroke-width: 1; }
 .arc-fill {
