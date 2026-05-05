@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Retrouver le Calme — Cohérence Cardiaque</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2D6A54">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Le Calme">
+<link rel="apple-touch-icon" href="icon-192.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --forest:    #2D6A54;   /* Jade profond — footer, header */
+  --forest-md: #4A8C74;   /* Jade — entêtes, semaines */
+  --sage:      #7BB5A0;   /* Sauge */
+  --sage-lt:   #d4ede6;
+  --blue:      #5B8FA8;   /* Bleu — calme, eau */
+  --blue-lt:   #c8dde8;
+  --turq:      #5C9E8A;   /* Turquoise — actif, timers */
+  --lav:       #B8A0C8;   /* Lavande — S3, ancre émotionnelle */
+  --lav-lt:    #ede4f4;
+  --rose:      #D4B0B8;   /* Rose — S4, cœur */
+  --rose-lt:   #f4e8ec;
+  --gold:      #C9B99A;   /* Sable chaud — accents neutres */
+  --amber:     #B8A0C8;   /* alias lav — compatibilité S3 */
+  --amber-lt:  #ede4f4;
+  --cream:     #E8E0D5;   /* Ivoire */
+  --warm:      #dcd4c8;
+  --warm-dk:   #ccc4b8;
+  --text:      #2D4A3E;   /* Vert très sombre — pas de noir pur */
+  --muted:     #6B9A88;
+  --light:     #f4f0e8;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: white;
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─────────────── HEADER ─────────────── */
+header {
+  background: var(--forest);
+  color: white;
+  padding: 2.4rem 1.5rem 2.1rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    /* cercles pleins (lueur douce) */
+    radial-gradient(circle 170px at 88% -5%,  rgba(255,255,255,.09) 0%, transparent 100%),
+    radial-gradient(circle 95px  at 9%  88%,  rgba(200,169,110,.18) 0%, transparent 100%),
+    radial-gradient(circle 60px  at 68% 82%,  rgba(125,158,138,.15) 0%, transparent 100%),
+    /* anneaux (contours) */
+    radial-gradient(circle 145px at 86% 12%, transparent 136px, rgba(255,255,255,.08) 136px, rgba(255,255,255,.08) 145px, transparent 146px),
+    radial-gradient(circle 78px  at 11% 84%, transparent 70px,  rgba(200,169,110,.12) 70px,  rgba(200,169,110,.12) 78px,  transparent 79px),
+    radial-gradient(circle 260px at 50% 140%, rgba(125,158,138,.05) 0%, transparent 100%);
+}
+.h-eyebrow {
+  font-size: .6rem;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.4);
+  margin-bottom: .9rem;
+  position: relative;
+}
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.9rem, 6vw, 2.7rem);
+  font-weight: 400;
+  line-height: 1.15;
+  position: relative;
+}
+header h1 em { font-style: italic; color: var(--gold); }
+.h-sub {
+  margin-top: .65rem;
+  font-size: .85rem;
+  color: rgba(255,255,255,.48);
+  font-weight: 300;
+  position: relative;
+  letter-spacing: .02em;
+}
+
+/* ─────────────── PROGRESS ───────────── */
+.progress-bar-zone {
+  background: white;
+  border-bottom: 1px solid var(--warm);
+  padding: .75rem 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: .9rem;
+}
+.pb-label {
+  font-size: .58rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.pb-track {
+  flex: 1;
+  height: 4px;
+  background: var(--warm);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.pb-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--turq), var(--lav));
+  border-radius: 2px;
+  transition: width .55s ease;
+}
+.pb-count {
+  font-size: .7rem;
+  color: var(--text);
+  flex-shrink: 0;
+  min-width: 3rem;
+  text-align: right;
+}
+
+/* ─────────────── TABS ───────────────── */
+.tabs-rail {
+  background: white;
+  border-bottom: 1px solid var(--warm);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.tabs-rail::-webkit-scrollbar { display: none; }
+.tabs-inner {
+  display: flex;
+  padding: 0 .8rem;
+  min-width: max-content;
+}
+.tab {
+  font-size: .66rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  color: var(--muted);
+  background: none;
+  border: none;
+  padding: .88rem 1rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.tab:hover { color: var(--text); }
+.tab.on { color: var(--forest); border-bottom-color: var(--sage); }
+.tab.refuge-tab { color: var(--sage); }
+.tab.refuge-tab.on { color: var(--forest); border-bottom-color: var(--gold); }
+
+/* ─────────────── MAIN ───────────────── */
+main {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 1.6rem 1.2rem 4rem;
+  background: var(--cream);
+}
+
+/* ─────────────── PANELS ─────────────── */
+.panel { display: none; }
+.panel.on { display: block; animation: up .32s ease; }
+@keyframes up { from { opacity:0; transform:translateY(7px) } to { opacity:1; transform:none } }
+
+/* ─────────────── WEEK HEADER ────────── */
+.wk-head {
+  display: flex;
+  gap: 1.1rem;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--warm);
+}
+.wk-badge {
+  flex-shrink: 0;
+  width: 3.8rem; height: 3.8rem;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .04rem;
+  font-size: .52rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.wk-badge .bnum {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.55rem;
+  font-weight: 400;
+  line-height: 1;
+}
+.w1 .wk-badge { background: var(--sage-lt);  color: var(--sage);   border: 1px solid #9ecab8; }
+.w2 .wk-badge { background: var(--blue-lt);  color: var(--blue);   border: 1px solid #9cbdd4; }
+.w3 .wk-badge { background: var(--amber-lt); color: var(--amber);  border: 1px solid #c8b0d8; }
+.w4 .wk-badge { background: var(--rose-lt);  color: var(--rose);   border: 1px solid #e0c0cc; }
+
+.wk-meta { flex: 1; }
+.wk-over {
+  display: block;
+  font-size: .6rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: .35rem;
+}
+.wk-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.55rem;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--text);
+  margin-bottom: .45rem;
+}
+.wk-desc {
+  font-size: .88rem;
+  color: var(--muted);
+  line-height: 1.68;
+  font-weight: 300;
+}
+
+/* ─────────────── DAYS ───────────────── */
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: .32rem;
+  margin-bottom: 1.5rem;
+}
+.day {
+  background: white;
+  border: 1px solid var(--warm);
+  border-radius: .42rem;
+  padding: .5rem .2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: transform .16s, box-shadow .16s;
+  -webkit-tap-highlight-color: transparent;
+}
+.day:hover { transform: translateY(-2px); box-shadow: 0 3px 10px rgba(0,0,0,.07); }
+.day.done  { background: var(--forest); border-color: var(--forest); color: white; }
+
+/* Jours cochés — couleur de la semaine */
+#p-w1 .day.done     { background: var(--sage);   border-color: var(--sage); }
+#p-w2 .day.done     { background: var(--blue);   border-color: var(--blue); }
+#p-w3 .day.done     { background: var(--lav);    border-color: var(--lav); }
+#p-w4 .day.done     { background: var(--rose);   border-color: var(--rose); }
+#p-refuge .day.done { background: var(--turq);   border-color: var(--turq); }
+.day .dl {
+  display: block;
+  font-size: .48rem;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: .2rem;
+}
+.day.done .dl { color: rgba(255,255,255,.45); }
+.day .dn { font-size: 1rem; font-weight: 300; line-height: 1.1; display: block; }
+.day .dc { font-size: .72rem; display: block; margin-top: .1rem; }
+
+/* ─────────────── EXERCISE CARDS ─────── */
+.exercises { display: flex; flex-direction: column; gap: .8rem; margin-bottom: 1.4rem; }
+
+.ex {
+  background: white;
+  border-radius: .6rem;
+  border: 1px solid var(--warm);
+  overflow: hidden;
+}
+
+/* Colored left border + tinted body per week — Doc 1 fidelity */
+#p-w1 .ex    { border-left: 3px solid var(--sage); }
+#p-w2 .ex    { border-left: 3px solid var(--blue); }
+#p-w3 .ex    { border-left: 3px solid var(--amber); }
+#p-w4 .ex    { border-left: 3px solid var(--rose); }
+#p-refuge .ex { border-left: 3px solid var(--sage); }
+
+#p-w1 .ex-body    { background: rgba(123,181,160,.15); }
+#p-w2 .ex-body    { background: rgba(91,143,168,.13); }
+#p-w3 .ex-body    { background: rgba(184,160,200,.16); }
+#p-w4 .ex-body    { background: rgba(212,176,184,.16); }
+#p-refuge .ex-body { background: rgba(92,158,138,.12); }
+.ex-trig {
+  display: flex;
+  align-items: center;
+  gap: .88rem;
+  padding: .92rem 1rem;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.ex-ico {
+  width: 2.1rem; height: 2.1rem;
+  border-radius: .4rem;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .95rem;
+  flex-shrink: 0;
+}
+.ico-sage  { background: var(--sage-lt); }
+.ico-blue  { background: var(--blue-lt); }
+.ico-amber { background: var(--amber-lt); }
+.ico-gold   { background: #f0ead8; }
+.ico-forest { background: #c8ddd4; }
+
+.ex-meta { flex: 1; min-width: 0; }
+.ex-meta strong { font-size: .96rem; font-weight: 500; display: block; line-height: 1.3; }
+.ex-meta small {
+  font-size: .65rem;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: block;
+  margin-top: .14rem;
+}
+.ex-arrow { color: var(--muted); font-size: .85rem; transition: transform .24s; flex-shrink: 0; }
+.ex.open .ex-arrow { transform: rotate(180deg); }
+
+.ex-body {
+  display: none;
+  padding: 0 1rem 1.1rem;
+  border-top: 1px solid var(--warm);
+}
+.ex.open .ex-body { display: block; animation: up .22s ease; }
+
+/* Steps */
+.steps { list-style: none; padding: .75rem 0 0; margin-bottom: .9rem; }
+.steps li {
+  display: flex;
+  gap: .65rem;
+  font-size: .9rem;
+  line-height: 1.67;
+  padding: .38rem 0;
+  border-bottom: 1px solid var(--warm);
+  color: var(--text);
+}
+.steps li:last-child { border-bottom: none; }
+.sn {
+  font-size: .6rem;
+  color: var(--muted);
+  margin-top: .32rem;
+  flex-shrink: 0;
+  width: 1rem;
+}
+
+/* Tip */
+.tip {
+  padding: .65rem .9rem;
+  border-radius: .4rem;
+  font-size: .84rem;
+  line-height: 1.63;
+  font-style: italic;
+  margin-bottom: .2rem;
+}
+.tip-sage  { background: var(--sage-lt);  color: #3a7a64; }
+.tip-blue  { background: var(--blue-lt);  color: #3a6880; }
+.tip-amber { background: var(--amber-lt); color: #7a60a0; }
+.tip-gold  { background: #f0ead8;         color: #8a7050; }
+
+/* Timer */
+.timer-row {
+  margin-top: .85rem;
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  flex-wrap: wrap;
+}
+.t-disp {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.95rem;
+  font-weight: 300;
+  color: var(--forest);
+  min-width: 4.2rem;
+  letter-spacing: .03em;
+  line-height: 1;
+  transition: opacity .7s ease;
+}
+.t-disp.live { opacity: 0; }
+.t-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: .62rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border: 1px solid var(--forest);
+  background: transparent;
+  color: var(--forest);
+  padding: .42rem .88rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: all .17s;
+}
+.t-btn:hover, .t-btn.running { background: var(--forest); color: white; }
+
+/* ─────────────── GUIDE SOUFFLE ──────── */
+.breath-guide {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 1.0rem 0 .5rem;
+}
+.stones-col {
+  grid-column: 1; grid-row: 1;
+  display: flex; flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .45rem;
+  padding-right: .4rem;
+}
+/* pierres empilées — base large, sommet étroit */
+.t-btn.stone-main {
+  font-size: .64rem;
+  padding: .46rem 1.1rem;
+  text-align: center;
+}
+.t-btn.stone-sec {
+  font-size: .58rem;
+  padding: .36rem .62rem;
+  text-align: center;
+  opacity: .72;
+}
+.breath-phase { grid-column: 3; grid-row: 1; justify-self: center; text-align: center; }
+
+@keyframes ripple-ring {
+  0%   { transform: scale(1); opacity: 0; }
+  6%   { opacity: .55; }
+  100% { transform: scale(3.2); opacity: 0; }
+}
+
+.breath-orb {
+  width: 86px; height: 86px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(92,158,138,.22);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  grid-column: 2; grid-row: 1;
+  justify-self: center; align-self: center;
+  transition: transform 5s cubic-bezier(0.37, 0, 0.22, 1),
+              border-color .6s ease,
+              box-shadow .6s ease;
+}
+.breath-orb.complete::before,
+.breath-orb.complete::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(92,158,138,.55);
+  pointer-events: none;
+  animation: ripple-ring 2.2s ease-out forwards;
+}
+.breath-orb.complete::after {
+  animation-delay: .75s;
+  animation-fill-mode: both;
+  border-color: rgba(91,143,168,.4);
+}
+.breath-orb.inhale {
+  transform: scale(1.36);
+  border-color: rgba(92,158,138,.7);
+  box-shadow: 0 0 22px rgba(92,158,138,.18);
+}
+.breath-orb.exhale {
+  transform: scale(0.76);
+  border-color: rgba(91,143,168,.38);
+  box-shadow: none;
+}
+.breath-core {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: rgba(92,158,138,.14);
+  transition: background 5s ease;
+}
+.breath-orb.inhale .breath-core { background: rgba(92,158,138,.38); }
+.breath-orb.exhale .breath-core { background: rgba(91,143,168,.16); }
+
+.breath-phase {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.45rem; /* taille fixe = max inhale mobile */
+  font-style: italic;
+  color: var(--muted);
+  min-width: 5.5rem;
+  transform: scale(0.76); /* repos ≈ 1.1rem */
+  transform-origin: center center;
+  transition: transform 5s cubic-bezier(0.37, 0, 0.22, 1), opacity .35s ease;
+}
+.breath-orb.inhale ~ .breath-phase { transform: scale(1); }
+.breath-orb.exhale ~ .breath-phase { transform: scale(0.565); }
+@media (min-width: 640px) {
+  .breath-phase { font-size: 1.75rem; }
+}
+
+/* ─── Arc de session ─── */
+.session-arc {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: center;
+  justify-self: center;
+  width: 160px; height: 160px;
+  transform: rotate(-90deg);
+  pointer-events: none;
+  overflow: visible;
+}
+.arc-track { fill: none; stroke: rgba(0,0,0,.05); stroke-width: 1; }
+.arc-fill {
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-dasharray: 452;  /* 2π × 72 */
+  stroke-dashoffset: 452;
+  transition: stroke-dashoffset .95s ease, opacity .8s ease;
+}
+#p-w1    .arc-fill { stroke: rgba(123,181,160,.6); }
+#p-w2    .arc-fill { stroke: rgba(91,143,168,.6); }
+#p-w3    .arc-fill { stroke: rgba(184,160,200,.6); }
+#p-w4    .arc-fill { stroke: rgba(212,176,184,.6); }
+#p-refuge .arc-fill { stroke: rgba(92,158,138,.6); }
+
+/* Son / vibration toggle */
+.sense-btn {
+  background: none;
+  border: 1px solid var(--warm);
+  border-radius: 2rem;
+  padding: .32rem .7rem;
+  font-size: .7rem;
+  cursor: pointer;
+  color: var(--muted);
+  letter-spacing: .06em;
+  transition: all .2s;
+  flex-shrink: 0;
+}
+.sense-btn.on { border-color: var(--sage); color: var(--forest); }
+
+/* ─────────────── RECAP ──────────────── */
+.recap-block {
+  color: var(--text);
+  border-radius: .6rem;
+  padding: 1.15rem 1.3rem;
+  margin-top: .4rem;
+  border: 1px solid transparent;
+}
+
+/* Fond clair teinté par semaine */
+#p-w1 .recap-block { background: var(--sage-lt);  border-color: #9ecab8; }
+#p-w2 .recap-block { background: var(--blue-lt);  border-color: #9cbdd4; }
+#p-w3 .recap-block { background: var(--lav-lt);   border-color: #c8b0d8; }
+#p-w4 .recap-block { background: var(--rose-lt);  border-color: #e0c0cc; }
+
+.recap-block h3 {
+  font-size: .58rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: .85rem;
+}
+.recap-cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .5rem;
+}
+.ri {
+  background: rgba(255,255,255,.6);
+  border-radius: .32rem;
+  padding: .58rem .7rem;
+}
+.ri label {
+  display: block;
+  font-size: .52rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: .22rem;
+}
+.ri span { font-size: .88rem; font-weight: 300; }
+
+/* ─────────────── CONSEIL ────────────── */
+.conseil {
+  display: flex;
+  gap: .8rem;
+  font-size: .87rem;
+  line-height: 1.7;
+  color: var(--muted);
+  font-style: italic;
+  margin-top: 1.1rem;
+}
+.conseil::before { content: '—'; color: var(--gold); flex-shrink: 0; }
+
+/* ─────────────── SIGNALS ────────────── */
+.signals-block {
+  margin-top: 1.1rem;
+  border: 1px solid var(--warm);
+  border-radius: .6rem;
+  padding: .95rem 1.1rem;
+}
+.signals-block h4 {
+  font-size: .58rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: .7rem;
+}
+.signals-block ul { list-style: none; display: flex; flex-direction: column; gap: .38rem; }
+.signals-block li { font-size: .88rem; display: flex; gap: .6rem; line-height: 1.55; }
+.signals-block li::before { content: '—'; color: var(--sage); flex-shrink: 0; margin-top: .02rem; }
+
+/* ─────────────── REFUGE ─────────────── */
+.refuge-hero {
+  text-align: center;
+  padding: 1.6rem 1rem 1.3rem;
+  border-bottom: 1px solid var(--warm);
+  margin-bottom: 1.4rem;
+}
+.refuge-hero h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: .5rem;
+}
+.refuge-hero p {
+  font-size: .88rem;
+  color: var(--muted);
+  line-height: 1.68;
+  font-weight: 300;
+  max-width: 380px;
+  margin: 0 auto;
+}
+.refuge-note {
+  background: var(--sage-lt);
+  border-radius: .5rem;
+  padding: .88rem 1.1rem;
+  font-size: .86rem;
+  color: #4a6858;
+  line-height: 1.65;
+  font-style: italic;
+  margin-bottom: 1.2rem;
+}
+
+/* ─────────────── REFERENCES ─────────── */
+.refs-zone {
+  max-width: 680px;
+  margin: 1.5rem auto 0;
+  padding: 0 1.2rem 3.5rem;
+}
+details {
+  border: 1px solid var(--warm);
+  border-radius: .6rem;
+  overflow: hidden;
+}
+summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .92rem 1.2rem;
+  font-size: .65rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: white;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+summary::-webkit-details-marker { display: none; }
+summary::after { content: '+'; font-size: .85rem; color: var(--sage); }
+details[open] summary::after { content: '−'; }
+
+.refs-body {
+  background: var(--forest);
+  color: white;
+  padding: 1.6rem 1.4rem 2rem;
+}
+.rg { margin-bottom: 1.8rem; }
+.rg:last-child { margin-bottom: 0; }
+.rg h4 {
+  font-size: .58rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: .85rem;
+  opacity: .85;
+}
+.rg ul { list-style: none; display: flex; flex-direction: column; gap: .95rem; }
+.rg li {
+  font-size: .8rem;
+  line-height: 1.6;
+  padding-left: .9rem;
+  border-left: 1px solid rgba(255,255,255,.14);
+  display: flex;
+  flex-direction: column;
+  gap: .1rem;
+}
+.ra { color: rgba(255,255,255,.4); font-size: .75rem; }
+.rt { font-style: italic; color: var(--cream); }
+.rs { font-size: .68rem; color: var(--gold); opacity: .75; }
+.rn { font-size: .72rem; color: rgba(255,255,255,.35); }
+
+/* ─────────────── INSTALL BANNER ────── */
+#install-banner {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--forest);
+  color: white;
+  padding: .9rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  z-index: 999;
+  box-shadow: 0 -2px 16px rgba(0,0,0,.15);
+  animation: slideUp .3s ease;
+}
+@keyframes slideUp { from { transform: translateY(100%) } to { transform: none } }
+#install-banner .ib-icon { font-size: 1.5rem; flex-shrink: 0; }
+#install-banner .ib-text { flex: 1; font-size: .82rem; line-height: 1.4; }
+#install-banner .ib-text strong { display: block; font-weight: 500; }
+#install-banner .ib-text span { color: rgba(255,255,255,.55); font-size: .74rem; }
+#install-btn {
+  background: white;
+  color: var(--forest);
+  border: none;
+  border-radius: .4rem;
+  padding: .48rem .9rem;
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+#install-dismiss {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,.45);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: .2rem;
+  flex-shrink: 0;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HEADER ═══════════ -->
+<header>
+  <p class="h-eyebrow">Programme guidé · 28 jours</p>
+  <h1>Retrouver <em>le Calme</em></h1>
+  <p class="h-sub">Cohérence cardiaque — du fondamental à l'intégration</p>
+</header>
+
+<!-- ═══════════ PROGRESS ═════════ -->
+<div class="progress-bar-zone">
+  <span class="pb-label">Progression</span>
+  <div class="pb-track"><div class="pb-fill" id="pb-fill" style="width:0%"></div></div>
+  <span class="pb-count" id="pb-count">0 / 28</span>
+  <button class="sense-btn" id="sense-toggle" title="Son et vibration">🔇</button>
+</div>
+
+<!-- ═══════════ TABS ═════════════ -->
+<div class="tabs-rail">
+  <div class="tabs-inner">
+    <button class="tab on"         onclick="show('w1',0)">Semaine 1</button>
+    <button class="tab"            onclick="show('w2',1)">Semaine 2</button>
+    <button class="tab"            onclick="show('w3',2)">Semaine 3</button>
+    <button class="tab"            onclick="show('w4',3)">Semaine 4</button>
+    <button class="tab refuge-tab" onclick="show('refuge',4)">🌿 Refuge</button>
+  </div>
+</div>
+
+<main>
+
+  <!-- ══════════════════════════
+       SEMAINE 1 — Je pose le rythme
+  ══════════════════════════════ -->
+  <div class="panel w1 on" id="p-w1">
+
+    <div class="wk-head">
+      <div class="wk-badge"><span>S</span><span class="bnum">1</span></div>
+      <div class="wk-meta">
+        <span class="wk-over">Jours 1 à 7</span>
+        <div class="wk-title">Je pose le rythme</div>
+        <p class="wk-desc">Un seul geste, pratiqué chaque matin. Pas de performance — juste la régularité. Le corps apprend par la répétition, pas par l'effort.</p>
+      </div>
+    </div>
+
+    <div class="days-grid" id="dg-w1"></div>
+
+    <div class="exercises">
+      <div class="ex" id="ex-1a">
+        <div class="ex-trig" onclick="toggleEx('ex-1a')">
+          <div class="ex-ico ico-sage">🌿</div>
+          <div class="ex-meta">
+            <strong>Respiration 5-5</strong>
+            <small>5 min · Chaque matin</small>
+          </div>
+          <span class="ex-arrow">▾</span>
+        </div>
+        <div class="ex-body">
+          <ul class="steps">
+            <li><span class="sn">1</span><span>Asseyez-vous confortablement, dos droit sans être rigide. Posez les mains sur les genoux.</span></li>
+            <li><span class="sn">2</span><span>Inspirez lentement par le nez — laissez l'air entrer sans le forcer. Le guide s'allume.</span></li>
+            <li><span class="sn">3</span><span>Expirez doucement par la bouche — laissez l'air partir de lui-même, naturellement.</span></li>
+            <li><span class="sn">4</span><span>Laissez le rythme s'installer. Si l'attention s'échappe, revenez sans vous juger — c'est le cœur de la pratique.</span></li>
+          </ul>
+          <div class="tip tip-sage">Comptez les premiers jours si ça aide. Après 3 ou 4 séances, le rythme s'installe de lui-même — et le comptage devient inutile.</div>
+          <div class="breath-guide" id="bt-1a"><div class="stones-col"><button class="t-btn stone-main" id="tb-1a" onclick="startT('1a',300)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('1a',300)">Recommencer</button></div><div class="breath-orb" id="bf-1a"><div class="breath-core"></div></div><span class="breath-phase" id="bl-1a"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-1a" r="72"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="recap-block">
+      <h3>Semaine 1 en un coup d'œil</h3>
+      <div class="recap-cols">
+        <div class="ri"><label>Durée</label><span>5 minutes</span></div>
+        <div class="ri"><label>Moment</label><span>Chaque matin</span></div>
+        <div class="ri"><label>Geste</label><span>Respiration 5-5</span></div>
+      </div>
+    </div>
+
+    <div class="conseil">Ne cherchez pas à "bien faire". Faites-le, c'est tout. En douceur ou à moitié endormi — chaque séance s'inscrit.</div>
+
+  </div>
+
+  <!-- ══════════════════════════
+       SEMAINE 2 — Je pose l'attention
+  ══════════════════════════════ -->
+  <div class="panel w2" id="p-w2">
+
+    <div class="wk-head">
+      <div class="wk-badge"><span>S</span><span class="bnum">2</span></div>
+      <div class="wk-meta">
+        <span class="wk-over">Jours 8 à 14</span>
+        <div class="wk-title">Je pose l'attention</div>
+        <p class="wk-desc">Le rythme est là. Maintenant, on dirige doucement l'attention vers le cœur — sans forcer, comme on pose une main.</p>
+      </div>
+    </div>
+
+    <div class="days-grid" id="dg-w2"></div>
+
+    <div class="exercises">
+      <div class="ex" id="ex-2a">
+        <div class="ex-trig" onclick="toggleEx('ex-2a')">
+          <div class="ex-ico ico-blue">💙</div>
+          <div class="ex-meta">
+            <strong>Respiration + Présence au cœur</strong>
+            <small>5 min · Chaque matin</small>
+          </div>
+          <span class="ex-arrow">▾</span>
+        </div>
+        <div class="ex-body">
+          <ul class="steps">
+            <li><span class="sn">1</span><span>Commencez par <strong>1 minute</strong> de respiration 5-5 pour retrouver le rythme.</span></li>
+            <li><span class="sn">2</span><span>Posez doucement l'attention sur la <strong>zone centrale de la poitrine</strong> — là, physiquement, où se trouve votre cœur.</span></li>
+            <li><span class="sn">3</span><span>Imaginez que votre souffle entre et sort <em>par le cœur</em>, comme si cette zone respirait.</span></li>
+            <li><span class="sn">4</span><span>Maintenez cette double attention — rythme et zone cardiaque — pendant les <strong>4 minutes restantes</strong>.</span></li>
+          </ul>
+          <div class="tip tip-blue">Si l'attention s'échappe — c'est normal. Revenir en douceur, c'est déjà l'exercice. Chaque retour est un entraînement.</div>
+          <div class="breath-guide" id="bt-2a"><div class="stones-col"><button class="t-btn stone-main" id="tb-2a" onclick="startT('2a',300)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('2a',300)">Recommencer</button></div><div class="breath-orb" id="bf-2a"><div class="breath-core"></div></div><span class="breath-phase" id="bl-2a"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-2a" r="72"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="recap-block">
+      <h3>Semaine 2 en un coup d'œil</h3>
+      <div class="recap-cols">
+        <div class="ri"><label>Durée</label><span>5 minutes</span></div>
+        <div class="ri"><label>Moment</label><span>Chaque matin</span></div>
+        <div class="ri"><label>Geste</label><span>Rythme + cœur</span></div>
+      </div>
+    </div>
+
+    <div class="conseil">Choisissez un moment fixe — avant le café, avant le téléphone. La régularité compte plus que la perfection.</div>
+
+  </div>
+
+  <!-- ══════════════════════════
+       SEMAINE 3 — Je laisse entrer la douceur
+  ══════════════════════════════ -->
+  <div class="panel w3" id="p-w3">
+
+    <div class="wk-head">
+      <div class="wk-badge"><span>S</span><span class="bnum">3</span></div>
+      <div class="wk-meta">
+        <span class="wk-over">Jours 15 à 21</span>
+        <div class="wk-title">Je laisse entrer la douceur</div>
+        <p class="wk-desc">La cohérence véritable s'installe ici. Une émotion simple, concrète — pas un concept. Un murmure de chaleur suffit.</p>
+      </div>
+    </div>
+
+    <div class="days-grid" id="dg-w3"></div>
+
+    <div class="exercises">
+      <div class="ex" id="ex-3a">
+        <div class="ex-trig" onclick="toggleEx('ex-3a')">
+          <div class="ex-ico ico-amber">✨</div>
+          <div class="ex-meta">
+            <strong>L'Ancre douce</strong>
+            <small>5 min · Chaque matin</small>
+          </div>
+          <span class="ex-arrow">▾</span>
+        </div>
+        <div class="ex-body">
+          <ul class="steps">
+            <li><span class="sn">1</span><span>Entrez dans le rythme : <strong>2 minutes</strong> de respiration et présence au cœur.</span></li>
+            <li><span class="sn">2</span><span>Évoquez un <strong>souvenir précis et concret</strong> — une scène, pas une idée. Un moment de douceur, de gratitude, de paix.</span></li>
+            <li><span class="sn">3</span><span>Laissez la sensation se déployer dans la poitrine, naturellement. Ne forcez rien.</span></li>
+            <li><span class="sn">4</span><span>Respirez <em>depuis</em> cette sensation pendant les <strong>3 minutes restantes</strong>.</span></li>
+          </ul>
+          <div class="tip tip-amber">Si rien de fort ne vient : un animal aimé, la lumière de fin d'après-midi, la chaleur d'une tasse dans les mains. La simplicité touche toujours plus profond que l'effort.</div>
+          <div class="breath-guide" id="bt-3a"><div class="stones-col"><button class="t-btn stone-main" id="tb-3a" onclick="startT('3a',300)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('3a',300)">Recommencer</button></div><div class="breath-orb" id="bf-3a"><div class="breath-core"></div></div><span class="breath-phase" id="bl-3a"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-3a" r="72"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="recap-block">
+      <h3>Semaine 3 en un coup d'œil</h3>
+      <div class="recap-cols">
+        <div class="ri"><label>Durée</label><span>5 minutes</span></div>
+        <div class="ri"><label>Moment</label><span>Chaque matin</span></div>
+        <div class="ri"><label>Geste</label><span>Ancre émotionnelle</span></div>
+      </div>
+    </div>
+
+    <div class="conseil">Même les jours sans émotion — posez juste la main sur la poitrine. La régularité du geste précède la profondeur de l'état.</div>
+
+  </div>
+
+  <!-- ══════════════════════════
+       SEMAINE 4 — Je vis autrement
+  ══════════════════════════════ -->
+  <div class="panel w4" id="p-w4">
+
+    <div class="wk-head">
+      <div class="wk-badge"><span>S</span><span class="bnum">4</span></div>
+      <div class="wk-meta">
+        <span class="wk-over">Jours 22 à 28</span>
+        <div class="wk-title">Je vis autrement</div>
+        <p class="wk-desc">Ce n'est plus seulement un exercice du matin. C'est la façon dont vous habitez votre journée — par touches courtes, à tout moment.</p>
+      </div>
+    </div>
+
+    <div class="days-grid" id="dg-w4"></div>
+
+    <div class="exercises">
+
+      <div class="ex" id="ex-4a">
+        <div class="ex-trig" onclick="toggleEx('ex-4a')">
+          <div class="ex-ico ico-sage">🌅</div>
+          <div class="ex-meta">
+            <strong>Séance du matin</strong>
+            <small>5 min · Chaque matin</small>
+          </div>
+          <span class="ex-arrow">▾</span>
+        </div>
+        <div class="ex-body">
+          <ul class="steps">
+            <li><span class="sn">1</span><span>Respiration 5-5 · <strong>1 minute</strong> — Retrouver le rythme.</span></li>
+            <li><span class="sn">2</span><span>Présence au cœur · <strong>1 minute</strong> — Porter l'attention sur la zone cardiaque.</span></li>
+            <li><span class="sn">3</span><span>Ancre douce · <strong>3 minutes</strong> — Évoquer et habiter la sensation.</span></li>
+          </ul>
+          <div class="tip tip-sage">En semaine 4, la séance doit être fluide et naturelle. Si vous ressentez de la résistance, revenez à la semaine 1 — un rythme simple suffit toujours.</div>
+          <div class="breath-guide" id="bt-4a"><div class="stones-col"><button class="t-btn stone-main" id="tb-4a" onclick="startT('4a',300)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('4a',300)">Recommencer</button></div><div class="breath-orb" id="bf-4a"><div class="breath-core"></div></div><span class="breath-phase" id="bl-4a"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-4a" r="72"/></svg></div>
+        </div>
+      </div>
+
+      <div class="ex" id="ex-4b">
+        <div class="ex-trig" onclick="toggleEx('ex-4b')">
+          <div class="ex-ico ico-gold">🌱</div>
+          <div class="ex-meta">
+            <strong>Trois Souffles</strong>
+            <small>30 sec · 3 fois dans la journée</small>
+          </div>
+          <span class="ex-arrow">▾</span>
+        </div>
+        <div class="ex-body">
+          <ul class="steps">
+            <li><span class="sn">1</span><span>Trois respirations lentes, posées — inspirez doucement, expirez encore plus doucement.</span></li>
+            <li><span class="sn">2</span><span>Glissez doucement l'attention vers votre cœur — remarquez ce que vous y sentez.</span></li>
+            <li><span class="sn">3</span><span>Une pensée simple et concrète — un instant de la journée pour lequel vous êtes reconnaissant.</span></li>
+          </ul>
+          <div class="tip tip-gold">Moments idéaux : avant une réunion difficile, en attendant que l'eau bouille, après une interaction tendue. Imperceptible pour l'entourage — puissant pour vous.</div>
+          <div class="breath-guide" id="bt-4b"><div class="stones-col"><button class="t-btn stone-main" id="tb-4b" onclick="startT('4b',30)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('4b',30)">Recommencer</button></div><div class="breath-orb" id="bf-4b"><div class="breath-core"></div></div><span class="breath-phase" id="bl-4b"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-4b" r="72"/></svg></div>
+        </div>
+      </div>
+
+      <div class="ex" id="ex-4c">
+        <div class="ex-trig" onclick="toggleEx('ex-4c')">
+          <div class="ex-ico ico-blue">🌙</div>
+          <div class="ex-meta">
+            <strong>Scan du soir</strong>
+            <small>5 min · Avant de dormir</small>
+          </div>
+          <span class="ex-arrow">▾</span>
+        </div>
+        <div class="ex-body">
+          <ul class="steps">
+            <li><span class="sn">1</span><span>Allongé, commencez la respiration en cohérence — inspirez doucement, expirez encore plus doucement.</span></li>
+            <li><span class="sn">2</span><span>Parcourez mentalement votre journée comme un observateur calme, sans juger.</span></li>
+            <li><span class="sn">3</span><span>Trouvez <strong>un moment</strong> où vous étiez présent, à l'aise, en accord avec vous-même — même bref, même petit.</span></li>
+            <li><span class="sn">4</span><span>Ancrez ce souvenir. Le cerveau apprend à reconnaître et reproduire cet état.</span></li>
+          </ul>
+          <div class="tip tip-blue">Même les jours difficiles contiennent un tel moment. Apprendre à le repérer, c'est déjà de la cohérence.</div>
+          <div class="breath-guide" id="bt-4c"><div class="stones-col"><button class="t-btn stone-main" id="tb-4c" onclick="startT('4c',300)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('4c',300)">Recommencer</button></div><div class="breath-orb" id="bf-4c"><div class="breath-core"></div></div><span class="breath-phase" id="bl-4c"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-4c" r="72"/></svg></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="recap-block">
+      <h3>Semaine 4 en un coup d'œil</h3>
+      <div class="recap-cols">
+        <div class="ri"><label>Matin</label><span>Séance 5 min</span></div>
+        <div class="ri"><label>Journée</label><span>3 × 30 secondes</span></div>
+        <div class="ri"><label>Soir</label><span>Scan 5 min</span></div>
+      </div>
+    </div>
+
+    <div class="signals-block">
+      <h4>Signes que quelque chose change</h4>
+      <ul>
+        <li>Une légèreté ou chaleur dans la poitrine pendant l'exercice</li>
+        <li>Les pensées ralentissent naturellement, sans effort</li>
+        <li>Les réactions émotionnelles semblent moins automatiques</li>
+        <li>Un sentiment d'être plus présent dans les conversations</li>
+        <li>L'endormissement vient plus doucement, le réveil plus calme</li>
+      </ul>
+    </div>
+
+    <div class="conseil">Vous ne guérissez pas votre vie en 5 minutes. Vous créez un espace où elle peut enfin respirer.</div>
+
+  </div>
+
+  <!-- ══════════════════════════
+       JOURS DIFFICILES
+  ══════════════════════════════ -->
+  <div class="panel" id="p-refuge">
+
+    <div class="refuge-hero">
+      <h2>Un espace. Rien qu'à vous.</h2>
+      <p>Ces deux gestes fonctionnent même allongé, même fatigué, même sceptique. Ce n'est pas reculer — c'est s'adapter avec sagesse.</p>
+    </div>
+
+    <div class="refuge-note">
+      Vous n'avez pas à "garder le rythme" aujourd'hui. Ces exercices sont un refuge, pas une performance. Prenez ce dont vous avez besoin.
+    </div>
+
+    <div class="exercises">
+
+      <div class="ex" id="ex-ra">
+        <div class="ex-trig" onclick="toggleEx('ex-ra')">
+          <div class="ex-ico ico-sage">🌿</div>
+          <div class="ex-meta">
+            <strong>La Pause 3 minutes</strong>
+            <small>3 min · N'importe quand</small>
+          </div>
+          <span class="ex-arrow">▾</span>
+        </div>
+        <div class="ex-body">
+          <ul class="steps">
+            <li><span class="sn">1</span><span>Asseyez-vous ou allongez-vous. Peu importe la position.</span></li>
+            <li><span class="sn">2</span><span>Posez une main sur votre ventre, juste sous le nombril.</span></li>
+            <li><span class="sn">3</span><span>Inspirez naturellement, puis expirez lentement — plus longtemps que d'habitude. Laissez faire.</span></li>
+            <li><span class="sn">4</span><span>Observez simplement l'air qui entre et qui sort. Ne forcez rien.</span></li>
+            <li><span class="sn">5</span><span>Si des pensées arrivent — laissez-les passer sans les suivre.</span></li>
+          </ul>
+          <div class="tip tip-sage">Vous ne faites rien de compliqué. Vous apprenez à vous arrêter.</div>
+          <div class="breath-guide" id="bt-ra"><div class="stones-col"><button class="t-btn stone-main" id="tb-ra" onclick="startT('ra',180)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('ra',180)">Recommencer</button></div><div class="breath-orb" id="bf-ra"><div class="breath-core"></div></div><span class="breath-phase" id="bl-ra"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-ra" r="72"/></svg></div>
+        </div>
+      </div>
+
+      <div class="ex" id="ex-rb">
+        <div class="ex-trig" onclick="toggleEx('ex-rb')">
+          <div class="ex-ico ico-sage">🌬️</div>
+          <div class="ex-meta">
+            <strong>Le Soupir Libérateur</strong>
+            <small>2 min · Accessible partout</small>
+          </div>
+          <span class="ex-arrow">▾</span>
+        </div>
+        <div class="ex-body">
+          <ul class="steps">
+            <li><span class="sn">1</span><span>Inspirez normalement par le nez.</span></li>
+            <li><span class="sn">2</span><span>Expirez lentement par la bouche avec un léger son — un <em>'haaah'</em> doux.</span></li>
+            <li><span class="sn">3</span><span>Sentez les épaules descendre à chaque expiration.</span></li>
+            <li><span class="sn">4</span><span>Répétez jusqu'à sentir les épaules s'alléger.</span></li>
+          </ul>
+          <div class="tip tip-sage">Ce son d'expiration active directement le nerf vague. C'est physiologique — pas de la magie. Accessible même aux toilettes du bureau.</div>
+          <div class="breath-guide" id="bt-rb"><div class="stones-col"><button class="t-btn stone-main" id="tb-rb" onclick="startT('rb',120)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('rb',120)">Recommencer</button></div><div class="breath-orb" id="bf-rb"><div class="breath-core"></div></div><span class="breath-phase" id="bl-rb"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-rb" r="72"/></svg></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="conseil">Même 2 minutes comptent. La douceur envers soi-même est déjà une forme de cohérence.</div>
+
+  </div>
+
+</main>
+
+<!-- ═══════════ RÉFÉRENCES ════════ -->
+<div class="refs-zone">
+  <details>
+    <summary>Références scientifiques</summary>
+    <div class="refs-body">
+
+      <div class="rg">
+        <h4>Recherches fondatrices</h4>
+        <ul>
+          <li>
+            <span class="ra">McCraty R., Atkinson M., Tomasino D., Bradley R.T.</span>
+            <span class="rt">The Coherent Heart: Heart-Brain Interactions, Psychophysiological Coherence, and the Emergence of System-Wide Order.</span>
+            <span class="rs">Integral Review, 5(2), 2009.</span>
+          </li>
+          <li>
+            <span class="ra">Armour J.A.</span>
+            <span class="rt">Cardiac neuronal hierarchy in health and disease.</span>
+            <span class="rs">American Journal of Physiology, 287(2), 2004.</span>
+            <span class="rn">Le « petit cerveau du cœur » — le système nerveux intrinsèque cardiaque avec ~40 000 neurones.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="rg">
+        <h4>Variabilité de la fréquence cardiaque</h4>
+        <ul>
+          <li>
+            <span class="ra">Lehrer P.M., Gevirtz R.</span>
+            <span class="rt">Heart rate variability biofeedback: how and why does it work?</span>
+            <span class="rs">Frontiers in Psychology, 5, 756, 2014.</span>
+            <span class="rn">Mécanismes du biofeedback VFC et la fréquence de résonance à 0,1 Hz (6 cycles/min).</span>
+          </li>
+          <li>
+            <span class="ra">Thayer J.F. et al.</span>
+            <span class="rt">A meta-analysis of heart rate variability and neuroimaging studies.</span>
+            <span class="rs">Neuroscience & Biobehavioral Reviews, 36(2), 2012.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="rg">
+        <h4>Respiration et système nerveux</h4>
+        <ul>
+          <li>
+            <span class="ra">Zaccaro A. et al.</span>
+            <span class="rt">How Breath-Control Can Change Your Life: A Systematic Review on Psycho-Physiological Correlates of Slow Breathing.</span>
+            <span class="rs">Frontiers in Human Neuroscience, 12, 353, 2018.</span>
+            <span class="rn">La respiration lente (4–6 cycles/min) amplifie la VFC et active le cortex préfrontal.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="rg">
+        <h4>Émotions positives & cohérence</h4>
+        <ul>
+          <li>
+            <span class="ra">McCraty R., Atkinson M., Tiller W.A. et al.</span>
+            <span class="rt">The effects of emotions on short-term power spectrum analysis of heart rate variability.</span>
+            <span class="rs">American Journal of Cardiology, 76(14), 1995.</span>
+            <span class="rn">La frustration produit un spectre VFC chaotique ; l'appréciation induit un spectre cohérent.</span>
+          </li>
+          <li>
+            <span class="ra">Fredrickson B.L. et al.</span>
+            <span class="rt">Open hearts build lives: Positive emotions induced through loving-kindness meditation.</span>
+            <span class="rs">Journal of Personality and Social Psychology, 95(5), 2008.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="rg">
+        <h4>Ouvrages de référence</h4>
+        <ul>
+          <li>
+            <span class="ra">Szondy D., Tran B.</span>
+            <span class="rt">La cohérence cardiaque 365.</span>
+            <span class="rs">Thierry Souccar Editions, 2013.</span>
+          </li>
+          <li>
+            <span class="ra">Servant D.</span>
+            <span class="rt">Relaxation et méditation — Trouver son équilibre émotionnel.</span>
+            <span class="rs">Odile Jacob, 2016.</span>
+          </li>
+          <li>
+            <span class="ra">HeartMath Institute</span>
+            <span class="rt">Science of the Heart, Volume 2.</span>
+            <span class="rs">HeartMath Institute, 2015. Disponible sur heartmath.org.</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </details>
+</div>
+
+<script>
+/* ── State ── */
+const SK = 'rc_v1';
+let done = JSON.parse(localStorage.getItem(SK) || '[]');
+const DL = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+
+function persist() {
+  localStorage.setItem(SK, JSON.stringify(done));
+  refreshProgress();
+}
+
+function refreshProgress() {
+  const n = done.length;
+  const pct = Math.round(n / 28 * 100);
+  document.getElementById('pb-fill').style.width = pct + '%';
+  document.getElementById('pb-count').textContent = n + ' / 28';
+}
+
+/* ── Day grids ── */
+function buildGrid(panelId, weekNum) {
+  const wrap = document.getElementById('dg-' + panelId);
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  const start = (weekNum - 1) * 7 + 1;
+  for (let i = 0; i < 7; i++) {
+    const d = start + i;
+    const isDone = done.includes(d);
+    const el = document.createElement('div');
+    el.className = 'day' + (isDone ? ' done' : '');
+    el.id = 'day-' + d;
+    el.onclick = () => toggleDay(d);
+    el.innerHTML =
+      '<span class="dl">' + DL[i] + '</span>' +
+      '<span class="dn">' + d + '</span>' +
+      '<span class="dc">' + (isDone ? '✓' : '·') + '</span>';
+    wrap.appendChild(el);
+  }
+}
+
+function autoValidateNextDay() {
+  for (let d = 1; d <= 28; d++) {
+    if (!done.includes(d)) {
+      done.push(d);
+      persist();
+      const el = document.getElementById('day-' + d);
+      if (el) {
+        el.className = 'day done';
+        el.querySelector('.dc').textContent = '✓';
+        el.style.transition = 'transform .4s ease, background .4s ease';
+        el.style.transform = 'scale(1.15)';
+        setTimeout(() => { el.style.transform = ''; }, 400);
+      }
+      break;
+    }
+  }
+}
+
+function toggleDay(d) {
+  const idx = done.indexOf(d);
+  if (idx >= 0) done.splice(idx, 1); else done.push(d);
+  persist();
+  const el = document.getElementById('day-' + d);
+  if (!el) return;
+  const isDone = done.includes(d);
+  el.className = 'day' + (isDone ? ' done' : '');
+  el.querySelector('.dc').textContent = isDone ? '✓' : '·';
+}
+
+/* ── Tabs ── */
+const TAB_IDS = ['w1','w2','w3','w4','refuge'];
+function show(id, idx) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('on'));
+  document.getElementById('p-' + id).classList.add('on');
+  document.querySelectorAll('.tab')[idx].classList.add('on');
+}
+
+/* ── Accordion ── */
+function toggleEx(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+/* ── Son & Vibration ── */
+let soundOn = false;
+let audioCtx = null;
+let reverbNode = null;
+
+function ensureReverb() {
+  if (reverbNode || !audioCtx) return;
+  const sr  = audioCtx.sampleRate;
+  const len = Math.round(sr * 3.8); /* 3.8s de queue de réverbération */
+  const buf = audioCtx.createBuffer(2, len, sr);
+  for (let ch = 0; ch < 2; ch++) {
+    const d = buf.getChannelData(ch);
+    for (let i = 0; i < len; i++) {
+      d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.8);
+    }
+  }
+  reverbNode = audioCtx.createConvolver();
+  reverbNode.buffer = buf;
+  reverbNode.connect(audioCtx.destination);
+}
+
+document.getElementById('sense-toggle').addEventListener('click', async function() {
+  soundOn = !soundOn;
+  this.classList.toggle('on', soundOn);
+  this.textContent = soundOn ? '🔔' : '🔇';
+  if (soundOn) {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state !== 'running') await audioCtx.resume();
+    playBowl(true); /* son de confirmation immédiat */
+  }
+});
+
+function makeBowl(freq, startAt, vol, dur = 2.4) {
+  ensureReverb();
+  const osc      = audioCtx.createOscillator();
+  const gain     = audioCtx.createGain();
+  const delay    = audioCtx.createDelay(2.0);
+  const fbGain   = audioCtx.createGain();
+  const wetGain  = audioCtx.createGain();
+
+  delay.delayTime.value = 0.38;   /* écho à 380ms — 1 repeat audible, 2 en fondu */
+  fbGain.gain.value     = 0.26;   /* feedback : 2-3 répétitions qui s'effacent */
+  wetGain.gain.value    = 0.20;
+
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  if (reverbNode) gain.connect(reverbNode);
+
+  /* boucle de délai */
+  gain.connect(delay);
+  delay.connect(fbGain);
+  fbGain.connect(delay);
+  delay.connect(wetGain);
+  wetGain.connect(audioCtx.destination);
+  if (reverbNode) wetGain.connect(reverbNode);
+
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(freq, startAt);
+  osc.frequency.exponentialRampToValueAtTime(freq * 0.9975, startAt + dur);
+  gain.gain.setValueAtTime(0, startAt);
+  gain.gain.linearRampToValueAtTime(vol, startAt + 0.012);
+  gain.gain.exponentialRampToValueAtTime(0.001, startAt + dur);
+  osc.start(startAt);
+  osc.stop(startAt + dur + 2.0);  /* laisser les échos s'éteindre */
+}
+
+async function playBowl(isInhale) {
+  if (!soundOn || !audioCtx) return;
+  try {
+    if (audioCtx.state !== 'running') await audioCtx.resume();
+    makeBowl(isInhale ? 216 : 162, audioCtx.currentTime, isInhale ? 0.20 : 0.17);
+  } catch(e) { console.warn('audio:', e); }
+}
+
+async function playCompletion() {
+  if (!audioCtx) return;
+  try {
+    if (audioCtx.state !== 'running') await audioCtx.resume();
+    const now   = audioCtx.currentTime;
+    const notes = [261.63, 329.63, 392.00]; /* Do-Mi-Sol (C4-E4-G4) */
+    notes.forEach((freq, i) => {
+      const osc  = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      if (reverbNode) gain.connect(reverbNode);
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      const t = now + i * 0.18;
+      gain.gain.setValueAtTime(0, t);
+      gain.gain.linearRampToValueAtTime(0.11, t + 0.012);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 2.2);
+      osc.start(t);
+      osc.stop(t + 2.25);
+    });
+  } catch(e) { console.warn('completion audio:', e); }
+}
+
+function gentleVibrate(isInhale) {
+  if (!soundOn || !('vibrate' in navigator)) return;
+  navigator.vibrate(isInhale ? 22 : [14, 45, 14]);
+}
+
+/* ── Timers ── */
+const TM = {};
+
+function fmt(s) {
+  if (s < 0) s = 0;
+  return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+}
+
+function parseDisp(txt) {
+  if (txt === '✓') return 0;
+  const p = txt.split(':');
+  return parseInt(p[0]) * 60 + parseInt(p[1]);
+}
+
+function pauseT(id) {
+  if (!TM[id]?.on) return;
+  clearInterval(TM[id].iv);
+  clearTimeout(TM[id].breath);
+  TM[id].on = false;
+  const td = document.getElementById('td-' + id);
+  const tb = document.getElementById('tb-' + id);
+  const bt = document.getElementById('bt-' + id);
+  const bf = document.getElementById('bf-' + id);
+  const bl = document.getElementById('bl-' + id);
+  if (td) td.classList.remove('live');
+  if (tb) { tb.classList.remove('running'); tb.textContent = '▶ Suite'; }
+  if (bt) bt.classList.remove('go');
+  if (bf) bf.classList.remove('inhale', 'exhale');
+  if (bl) bl.textContent = '';
+}
+
+function startT(id, dur) {
+  if (TM[id]?.on) { pauseT(id); return; }
+
+  const td = document.getElementById('td-' + id);
+  const tb = document.getElementById('tb-' + id);
+  const bt = document.getElementById('bt-' + id);
+  const bf = document.getElementById('bf-' + id);
+  const bl = document.getElementById('bl-' + id);
+
+  /* reprend là où on s'est arrêté, sinon démarre du début */
+  let rem = TM[id]?.rem ?? parseDisp(td?.textContent ?? '');
+  if (!rem || rem <= 0) rem = dur;
+
+  if (bt) bt.classList.add('go');
+  if (tb) { tb.classList.add('running'); tb.textContent = '⏸ Pause'; }
+  if (td) td.classList.add('live');
+  const arcEl = document.getElementById('arc-fill-' + id);
+
+  let phase = TM[id]?.phase ?? 'in';
+
+  function breathCycle() {
+    if (!TM[id]?.on) return;
+    if (bf) {
+      if (phase === 'in') {
+        bf.classList.remove('exhale'); bf.classList.add('inhale');
+        if (bl) bl.textContent = 'Inspirez';
+        playBowl(true); gentleVibrate(true);
+        phase = 'out';
+      } else {
+        bf.classList.remove('inhale'); bf.classList.add('exhale');
+        if (bl) bl.textContent = 'Expirez';
+        playBowl(false); gentleVibrate(false);
+        phase = 'in';
+      }
+    }
+    TM[id].phase = phase;
+    TM[id].breath = setTimeout(breathCycle, 5000);
+  }
+
+  TM[id] = { on: true, rem, phase };
+  breathCycle();
+
+  TM[id].iv = setInterval(() => {
+    rem--;
+    TM[id].rem = rem;
+    if (td) td.textContent = rem > 0 ? fmt(rem) : '✓';
+    if (arcEl) arcEl.style.strokeDashoffset = Math.max(0, 452 * (rem / dur));
+    if (rem <= 0) {
+      clearInterval(TM[id].iv);
+      clearTimeout(TM[id].breath);
+      TM[id] = null;
+      if (td) { td.classList.remove('live'); }
+      if (tb) { tb.classList.remove('running'); tb.textContent = '▶ Début'; }
+      /* bt.go retiré après le ripple pour que l'animation reste visible */
+      if (bt) setTimeout(() => bt.classList.remove('go'), 3600);
+      if (bf) {
+        bf.classList.remove('inhale', 'exhale');
+        bf.classList.add('complete');
+        setTimeout(() => bf && bf.classList.remove('complete'), 3500);
+      }
+      if (bl) bl.textContent = '';
+      if (arcEl) {
+        setTimeout(() => { arcEl.style.opacity = '0'; }, 300);
+        setTimeout(() => { arcEl.style.strokeDashoffset = '452'; arcEl.style.opacity = '1'; }, 4200);
+      }
+      playCompletion();
+      autoValidateNextDay();
+    }
+  }, 1000);
+}
+
+function resetT(id, dur) {
+  if (TM[id]) {
+    clearInterval(TM[id].iv);
+    clearTimeout(TM[id].breath);
+    TM[id] = null;
+  }
+  const td = document.getElementById('td-' + id);
+  const tb = document.getElementById('tb-' + id);
+  const bt = document.getElementById('bt-' + id);
+  const bf = document.getElementById('bf-' + id);
+  const bl = document.getElementById('bl-' + id);
+  if (td) { td.classList.remove('live'); td.textContent = fmt(dur); }
+  if (tb) { tb.classList.remove('running'); tb.textContent = '▶ Début'; }
+  if (bt) bt.classList.remove('go');
+  if (bf) bf.classList.remove('inhale', 'exhale');
+  if (bl) bl.textContent = '';
+  const arcEl = document.getElementById('arc-fill-' + id);
+  if (arcEl) { arcEl.style.strokeDashoffset = '452'; arcEl.style.opacity = '1'; }
+}
+
+/* ── Init ── */
+buildGrid('w1', 1);
+buildGrid('w2', 2);
+buildGrid('w3', 3);
+buildGrid('w4', 4);
+refreshProgress();
+</script>
+
+<!-- ═══════════════════════════════
+     PWA — Service Worker + Install
+════════════════════════════════ -->
+<div id="install-banner" style="display:none">
+  <span class="ib-icon">🌿</span>
+  <div class="ib-text">
+    <strong>Installer l'app</strong>
+    <span>Accès rapide · fonctionne hors-ligne</span>
+  </div>
+  <button id="install-btn">Ajouter</button>
+  <button id="install-dismiss" aria-label="Fermer">✕</button>
+</div>
+
+<script>
+/* ── Service Worker ── */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .catch(err => console.warn('SW:', err));
+  });
+}
+
+/* ── Install Prompt ── */
+let deferredPrompt = null;
+const banner      = document.getElementById('install-banner');
+const installBtn  = document.getElementById('install-btn');
+const dismissBtn  = document.getElementById('install-dismiss');
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (!localStorage.getItem('pwa_dismissed')) {
+    setTimeout(() => banner.style.display = 'flex', 2000);
+  }
+});
+
+installBtn.addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  banner.style.display = 'none';
+  if (outcome === 'accepted') localStorage.setItem('pwa_installed', '1');
+});
+
+dismissBtn.addEventListener('click', () => {
+  banner.style.display = 'none';
+  localStorage.setItem('pwa_dismissed', '1');
+});
+
+window.addEventListener('appinstalled', () => {
+  banner.style.display = 'none';
+  deferredPrompt = null;
+});
+
+/* ── Notification locale (rappel quotidien) ── */
+function scheduleLocalReminder() {
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  if (!('serviceWorker' in navigator)) return;
+  navigator.serviceWorker.ready.then(reg => {
+    const now   = new Date();
+    const next  = new Date();
+    next.setHours(8, 0, 0, 0);
+    if (next <= now) next.setDate(next.getDate() + 1);
+    const delay = next - now;
+    setTimeout(() => {
+      reg.showNotification('Retrouver le Calme 🌿', {
+        body: "C'est l'heure de ta séance du matin.",
+        icon: './icon-192.png',
+        badge: './icon-192.png',
+        tag: 'rappel-quotidien',
+        renotify: false
+      });
+      scheduleLocalReminder();
+    }, delay);
+  });
+}
+
+async function requestNotifPermission() {
+  if (!('Notification' in window)) return;
+  if (Notification.permission === 'default') {
+    const perm = await Notification.requestPermission();
+    if (perm === 'granted') scheduleLocalReminder();
+  } else if (Notification.permission === 'granted') {
+    scheduleLocalReminder();
+  }
+}
+
+/* Demande de permission après 30 secondes d'utilisation */
+setTimeout(requestNotifPermission, 30000);
+</script>
+</body>
+</html>
