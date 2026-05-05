@@ -521,6 +521,10 @@ main {
 
 /* ─── Réduction proportionnelle sur petit mobile ─── */
 @media (max-width: 479px) {
+  /* tabs : tous visibles sans scroll */
+  .tab { padding: .78rem .52rem; font-size: .57rem; letter-spacing: .05em; }
+  .tabs-inner { padding: 0 .4rem; }
+
   /* colonne gauche = taille naturelle, colonne texte = tout le reste */
   .breath-guide  { grid-template-columns: auto auto 1fr; }
   .session-arc   { width: 116px; height: 116px; }
