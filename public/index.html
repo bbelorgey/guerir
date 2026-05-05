@@ -518,6 +518,17 @@ main {
 @media (min-width: 640px) {
   .session-arc { width: 160px; height: 160px; }
 }
+
+/* ─── Réduction proportionnelle sur petit mobile ─── */
+@media (max-width: 479px) {
+  .session-arc   { width: 116px; height: 116px; }
+  .breath-orb    { width: 68px;  height: 68px; }
+  .breath-core   { width: 34px;  height: 34px; }
+  .breath-phase  { font-size: 1.05rem; }
+  .t-btn.stone-main { font-size: .58rem; padding: .4rem .72rem; }
+  .t-btn.stone-sec  { font-size: .52rem; padding: .3rem .5rem; }
+  .stones-col { gap: .38rem; }
+}
 .arc-track { fill: none; stroke: rgba(0,0,0,.05); stroke-width: 1; }
 .arc-fill {
   fill: none;
