@@ -330,8 +330,8 @@ main {
   display: block;
   margin-top: .14rem;
 }
-.ex-arrow { color: var(--forest-md); font-size: 1.2rem; font-weight: 600; transition: transform .24s; flex-shrink: 0; line-height: 1; }
-.ex.open .ex-arrow { transform: rotate(180deg); }
+.ex-arrow { color: var(--forest-md); font-size: 1.3rem; font-weight: 400; transition: transform .24s; flex-shrink: 0; line-height: 1; }
+.ex.open .ex-arrow { transform: rotate(45deg); }
 
 .ex-body {
   display: none;
@@ -446,7 +446,8 @@ main {
 .breath-orb {
   width: 86px; height: 86px;
   border-radius: 50%;
-  border: 1.5px solid rgba(92,158,138,.22);
+  border: 2px solid rgba(92,158,138,.45);
+  box-shadow: 0 0 10px rgba(92,158,138,.08);
   display: flex; align-items: center; justify-content: center;
   position: relative;
   grid-column: 2; grid-row: 1;
@@ -483,7 +484,7 @@ main {
 .breath-core {
   width: 46px; height: 46px;
   border-radius: 50%;
-  background: rgba(92,158,138,.14);
+  background: rgba(92,158,138,.22);
   transition: background 5s ease;
 }
 .breath-orb.inhale .breath-core { background: rgba(92,158,138,.38); }
@@ -538,17 +539,17 @@ main {
 .arc-track { fill: none; stroke: rgba(0,0,0,.05); stroke-width: 1; }
 .arc-fill {
   fill: none;
-  stroke-width: 1.5;
+  stroke-width: 2.5;
   stroke-linecap: round;
   stroke-dasharray: 452;  /* 2π × 72 */
   stroke-dashoffset: 452;
   transition: stroke-dashoffset .95s ease, opacity .8s ease;
 }
-#p-w1    .arc-fill { stroke: rgba(123,181,160,.6); }
-#p-w2    .arc-fill { stroke: rgba(91,143,168,.6); }
-#p-w3    .arc-fill { stroke: rgba(184,160,200,.6); }
-#p-w4    .arc-fill { stroke: rgba(212,176,184,.6); }
-#p-refuge .arc-fill { stroke: rgba(92,158,138,.6); }
+#p-w1    .arc-fill { stroke: rgba(123,181,160,.9); }
+#p-w2    .arc-fill { stroke: rgba(91,143,168,.9); }
+#p-w3    .arc-fill { stroke: rgba(184,160,200,.9); }
+#p-w4    .arc-fill { stroke: rgba(212,176,184,.9); }
+#p-refuge .arc-fill { stroke: rgba(92,158,138,.9); }
 
 /* Son / vibration toggle */
 .sense-btn {
@@ -838,7 +839,7 @@ details[open] summary::after { content: '−'; }
             <strong>Respiration 5-5</strong>
             <small>5 min · Chaque matin</small>
           </div>
-          <span class="ex-arrow">▾</span>
+          <span class="ex-arrow">+</span>
         </div>
         <div class="ex-body">
           <ul class="steps">
@@ -890,7 +891,7 @@ details[open] summary::after { content: '−'; }
             <strong>Respiration + Présence au cœur</strong>
             <small>5 min · Chaque matin</small>
           </div>
-          <span class="ex-arrow">▾</span>
+          <span class="ex-arrow">+</span>
         </div>
         <div class="ex-body">
           <ul class="steps">
@@ -942,7 +943,7 @@ details[open] summary::after { content: '−'; }
             <strong>L'Ancre douce</strong>
             <small>5 min · Chaque matin</small>
           </div>
-          <span class="ex-arrow">▾</span>
+          <span class="ex-arrow">+</span>
         </div>
         <div class="ex-body">
           <ul class="steps">
@@ -995,7 +996,7 @@ details[open] summary::after { content: '−'; }
             <strong>Séance du matin</strong>
             <small>5 min · Chaque matin</small>
           </div>
-          <span class="ex-arrow">▾</span>
+          <span class="ex-arrow">+</span>
         </div>
         <div class="ex-body">
           <ul class="steps">
@@ -1015,7 +1016,7 @@ details[open] summary::after { content: '−'; }
             <strong>Trois Souffles</strong>
             <small>30 sec · 3 fois dans la journée</small>
           </div>
-          <span class="ex-arrow">▾</span>
+          <span class="ex-arrow">+</span>
         </div>
         <div class="ex-body">
           <ul class="steps">
@@ -1035,7 +1036,7 @@ details[open] summary::after { content: '−'; }
             <strong>Scan du soir</strong>
             <small>5 min · Avant de dormir</small>
           </div>
-          <span class="ex-arrow">▾</span>
+          <span class="ex-arrow">+</span>
         </div>
         <div class="ex-body">
           <ul class="steps">
@@ -1098,7 +1099,7 @@ details[open] summary::after { content: '−'; }
             <strong>La Pause 3 minutes</strong>
             <small>3 min · N'importe quand</small>
           </div>
-          <span class="ex-arrow">▾</span>
+          <span class="ex-arrow">+</span>
         </div>
         <div class="ex-body">
           <ul class="steps">
@@ -1120,7 +1121,7 @@ details[open] summary::after { content: '−'; }
             <strong>Le Soupir Libérateur</strong>
             <small>2 min · Accessible partout</small>
           </div>
-          <span class="ex-arrow">▾</span>
+          <span class="ex-arrow">+</span>
         </div>
         <div class="ex-body">
           <ul class="steps">
