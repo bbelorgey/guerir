@@ -743,6 +743,69 @@ details[open] summary::after { content: '−'; }
 .rs { font-size: .68rem; color: var(--gold); opacity: .75; }
 .rn { font-size: .72rem; color: rgba(255,255,255,.35); }
 
+/* ─────────────── ORB LAUNCHER ──────── */
+.orb-launch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .48rem;
+  padding: 1.1rem 0 .85rem;
+  position: relative;
+}
+@keyframes orb-breathe {
+  0%,100% { transform: scale(1);    box-shadow: 0 0 10px rgba(92,158,138,.08); }
+  50%      { transform: scale(1.07); box-shadow: 0 0 22px rgba(92,158,138,.16); }
+}
+.orb-btn {
+  width: 88px; height: 88px;
+  border-radius: 50%;
+  border: 2px solid rgba(92,158,138,.38);
+  background: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  position: relative;
+  animation: orb-breathe 5s ease-in-out infinite;
+  will-change: transform;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color .3s ease;
+}
+.orb-btn::before {
+  content: '';
+  position: absolute;
+  inset: -9px;
+  border-radius: 50%;
+  border: 1px solid rgba(92,158,138,.11);
+  pointer-events: none;
+}
+.orb-btn:hover  { border-color: rgba(92,158,138,.68); }
+.orb-btn:active { animation-play-state: paused; transform: scale(.93) !important; }
+.ol-icon {
+  color: var(--forest-md);
+  font-size: .82rem;
+  opacity: .6;
+  pointer-events: none;
+  user-select: none;
+}
+.ol-dur {
+  font-size: .63rem;
+  color: var(--muted);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.ol-reset {
+  font-size: .58rem;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: .4;
+  letter-spacing: .05em;
+  font-family: 'Inter', sans-serif;
+  padding: 0;
+  transition: opacity .2s;
+}
+.ol-reset:hover { opacity: .75; }
+
 /* ─────────────── RHYTHM TAG ─────────── */
 .rhythm-tag {
   display: inline-block;
@@ -1038,7 +1101,7 @@ details[open] summary::after { content: '−'; }
             <li><span class="sn">4</span><span>Laissez le rythme s'installer. Si l'attention s'échappe, revenez sans vous juger — c'est le cœur de la pratique.</span></li>
           </ul>
           <div class="tip tip-sage">Comptez les premiers jours si ça aide. Après 3 ou 4 séances, le rythme s'installe de lui-même — et le comptage devient inutile.</div>
-          <div class="breath-guide" id="bt-1a"><div class="stones-col"><button class="t-btn stone-main" id="tb-1a" onclick="openFs('1a',300)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('1a',300)">Recommencer</button></div><div class="breath-orb" id="bf-1a"><div class="breath-core"></div></div><span class="breath-phase" id="bl-1a"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-1a" r="72"/></svg></div>
+          <div class="orb-launch" id="bt-1a"><button id="tb-1a" style="display:none">▶ Début</button><div class="breath-orb" id="bf-1a" style="display:none"><div class="breath-core"></div></div><span class="breath-phase" id="bl-1a" style="display:none"></span><svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"><circle class="arc-fill" id="arc-fill-1a" r="72"/></svg><button class="orb-btn" onclick="openFs('1a',300)" aria-label="Démarrer la séance"><span class="ol-icon">▶</span></button><span class="ol-dur">5 minutes</span><button class="ol-reset" onclick="resetT('1a',300)">recommencer</button></div>
         </div>
       </div>
     </div>
@@ -1090,7 +1153,7 @@ details[open] summary::after { content: '−'; }
             <li><span class="sn">4</span><span>Maintenez cette double attention — rythme et zone cardiaque — pendant les <strong>4 minutes restantes</strong>.</span></li>
           </ul>
           <div class="tip tip-blue">Si l'attention s'échappe — c'est normal. Revenir en douceur, c'est déjà l'exercice. Chaque retour est un entraînement.</div>
-          <div class="breath-guide" id="bt-2a"><div class="stones-col"><button class="t-btn stone-main" id="tb-2a" onclick="openFs('2a',300)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('2a',300)">Recommencer</button></div><div class="breath-orb" id="bf-2a"><div class="breath-core"></div></div><span class="breath-phase" id="bl-2a"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-2a" r="72"/></svg></div>
+          <div class="orb-launch" id="bt-2a"><button id="tb-2a" style="display:none">▶ Début</button><div class="breath-orb" id="bf-2a" style="display:none"><div class="breath-core"></div></div><span class="breath-phase" id="bl-2a" style="display:none"></span><svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"><circle class="arc-fill" id="arc-fill-2a" r="72"/></svg><button class="orb-btn" onclick="openFs('2a',300)" aria-label="Démarrer la séance"><span class="ol-icon">▶</span></button><span class="ol-dur">5 minutes</span><button class="ol-reset" onclick="resetT('2a',300)">recommencer</button></div>
         </div>
       </div>
     </div>
@@ -1142,7 +1205,7 @@ details[open] summary::after { content: '−'; }
             <li><span class="sn">4</span><span>Respirez <em>depuis</em> cette sensation pendant les <strong>3 minutes restantes</strong>.</span></li>
           </ul>
           <div class="tip tip-amber">Si rien de fort ne vient : un animal aimé, la lumière de fin d'après-midi, la chaleur d'une tasse dans les mains. La simplicité touche toujours plus profond que l'effort.</div>
-          <div class="breath-guide" id="bt-3a"><div class="stones-col"><button class="t-btn stone-main" id="tb-3a" onclick="openFs('3a',300)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('3a',300)">Recommencer</button></div><div class="breath-orb" id="bf-3a"><div class="breath-core"></div></div><span class="breath-phase" id="bl-3a"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-3a" r="72"/></svg></div>
+          <div class="orb-launch" id="bt-3a"><button id="tb-3a" style="display:none">▶ Début</button><div class="breath-orb" id="bf-3a" style="display:none"><div class="breath-core"></div></div><span class="breath-phase" id="bl-3a" style="display:none"></span><svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"><circle class="arc-fill" id="arc-fill-3a" r="72"/></svg><button class="orb-btn" onclick="openFs('3a',300)" aria-label="Démarrer la séance"><span class="ol-icon">▶</span></button><span class="ol-dur">5 minutes</span><button class="ol-reset" onclick="resetT('3a',300)">recommencer</button></div>
         </div>
       </div>
     </div>
@@ -1194,7 +1257,7 @@ details[open] summary::after { content: '−'; }
             <li><span class="sn">3</span><span>Ancre douce · <strong>3 minutes</strong> — Évoquer et habiter la sensation.</span></li>
           </ul>
           <div class="tip tip-sage">En semaine 4, la séance doit être fluide et naturelle. Si vous ressentez de la résistance, revenez à la semaine 1 — un rythme simple suffit toujours.</div>
-          <div class="breath-guide" id="bt-4a"><div class="stones-col"><button class="t-btn stone-main" id="tb-4a" onclick="openFs('4a',300)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('4a',300)">Recommencer</button></div><div class="breath-orb" id="bf-4a"><div class="breath-core"></div></div><span class="breath-phase" id="bl-4a"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-4a" r="72"/></svg></div>
+          <div class="orb-launch" id="bt-4a"><button id="tb-4a" style="display:none">▶ Début</button><div class="breath-orb" id="bf-4a" style="display:none"><div class="breath-core"></div></div><span class="breath-phase" id="bl-4a" style="display:none"></span><svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"><circle class="arc-fill" id="arc-fill-4a" r="72"/></svg><button class="orb-btn" onclick="openFs('4a',300)" aria-label="Démarrer la séance"><span class="ol-icon">▶</span></button><span class="ol-dur">5 minutes</span><button class="ol-reset" onclick="resetT('4a',300)">recommencer</button></div>
         </div>
       </div>
 
@@ -1214,7 +1277,7 @@ details[open] summary::after { content: '−'; }
             <li><span class="sn">3</span><span>Une pensée simple et concrète — un instant de la journée pour lequel vous êtes reconnaissant.</span></li>
           </ul>
           <div class="tip tip-gold">Moments idéaux : avant une réunion difficile, en attendant que l'eau bouille, après une interaction tendue. Imperceptible pour l'entourage — puissant pour vous.</div>
-          <div class="breath-guide" id="bt-4b"><div class="stones-col"><button class="t-btn stone-main" id="tb-4b" onclick="openFs('4b',30)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('4b',30)">Recommencer</button></div><div class="breath-orb" id="bf-4b"><div class="breath-core"></div></div><span class="breath-phase" id="bl-4b"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-4b" r="72"/></svg></div>
+          <div class="orb-launch" id="bt-4b"><button id="tb-4b" style="display:none">▶ Début</button><div class="breath-orb" id="bf-4b" style="display:none"><div class="breath-core"></div></div><span class="breath-phase" id="bl-4b" style="display:none"></span><svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"><circle class="arc-fill" id="arc-fill-4b" r="72"/></svg><button class="orb-btn" onclick="openFs('4b',30)" aria-label="Démarrer la séance"><span class="ol-icon">▶</span></button><span class="ol-dur">30 secondes</span><button class="ol-reset" onclick="resetT('4b',30)">recommencer</button></div>
         </div>
       </div>
 
@@ -1235,7 +1298,7 @@ details[open] summary::after { content: '−'; }
             <li><span class="sn">4</span><span>Ancrez ce souvenir. Le cerveau apprend à reconnaître et reproduire cet état.</span></li>
           </ul>
           <div class="tip tip-blue">Même les jours difficiles contiennent un tel moment. Apprendre à le repérer, c'est déjà de la cohérence.</div>
-          <div class="breath-guide" id="bt-4c"><div class="stones-col"><button class="t-btn stone-main" id="tb-4c" onclick="openFs('4c',300)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('4c',300)">Recommencer</button></div><div class="breath-orb" id="bf-4c"><div class="breath-core"></div></div><span class="breath-phase" id="bl-4c"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-4c" r="72"/></svg></div>
+          <div class="orb-launch" id="bt-4c"><button id="tb-4c" style="display:none">▶ Début</button><div class="breath-orb" id="bf-4c" style="display:none"><div class="breath-core"></div></div><span class="breath-phase" id="bl-4c" style="display:none"></span><svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"><circle class="arc-fill" id="arc-fill-4c" r="72"/></svg><button class="orb-btn" onclick="openFs('4c',300)" aria-label="Démarrer la séance"><span class="ol-icon">▶</span></button><span class="ol-dur">5 minutes</span><button class="ol-reset" onclick="resetT('4c',300)">recommencer</button></div>
         </div>
       </div>
 
@@ -1299,7 +1362,7 @@ details[open] summary::after { content: '−'; }
             <li><span class="sn">5</span><span>Si des pensées arrivent — laissez-les passer sans les suivre.</span></li>
           </ul>
           <div class="tip tip-sage">Vous ne faites rien de compliqué. Vous apprenez à vous arrêter.</div>
-          <div class="breath-guide" id="bt-ra"><div class="stones-col"><button class="t-btn stone-main" id="tb-ra" onclick="openFs('ra',180)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('ra',180)">Recommencer</button></div><div class="breath-orb" id="bf-ra"><div class="breath-core"></div></div><span class="breath-phase" id="bl-ra"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-ra" r="72"/></svg></div>
+          <div class="orb-launch" id="bt-ra"><button id="tb-ra" style="display:none">▶ Début</button><div class="breath-orb" id="bf-ra" style="display:none"><div class="breath-core"></div></div><span class="breath-phase" id="bl-ra" style="display:none"></span><svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"><circle class="arc-fill" id="arc-fill-ra" r="72"/></svg><button class="orb-btn" onclick="openFs('ra',180)" aria-label="Démarrer la séance"><span class="ol-icon">▶</span></button><span class="ol-dur">3 minutes</span><button class="ol-reset" onclick="resetT('ra',180)">recommencer</button></div>
         </div>
       </div>
 
@@ -1320,7 +1383,7 @@ details[open] summary::after { content: '−'; }
             <li><span class="sn">4</span><span>Répétez jusqu'à sentir les épaules s'alléger.</span></li>
           </ul>
           <div class="tip tip-sage">Ce son d'expiration active directement le nerf vague. C'est physiologique — pas de la magie. Accessible même aux toilettes du bureau.</div>
-          <div class="breath-guide" id="bt-rb"><div class="stones-col"><button class="t-btn stone-main" id="tb-rb" onclick="openFs('rb',120)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('rb',120)">Recommencer</button></div><div class="breath-orb" id="bf-rb"><div class="breath-core"></div></div><span class="breath-phase" id="bl-rb"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-rb" r="72"/></svg></div>
+          <div class="orb-launch" id="bt-rb"><button id="tb-rb" style="display:none">▶ Début</button><div class="breath-orb" id="bf-rb" style="display:none"><div class="breath-core"></div></div><span class="breath-phase" id="bl-rb" style="display:none"></span><svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"><circle class="arc-fill" id="arc-fill-rb" r="72"/></svg><button class="orb-btn" onclick="openFs('rb',120)" aria-label="Démarrer la séance"><span class="ol-icon">▶</span></button><span class="ol-dur">2 minutes</span><button class="ol-reset" onclick="resetT('rb',120)">recommencer</button></div>
         </div>
       </div>
 
