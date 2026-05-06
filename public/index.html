@@ -743,6 +743,195 @@ details[open] summary::after { content: '−'; }
 .rs { font-size: .68rem; color: var(--gold); opacity: .75; }
 .rn { font-size: .72rem; color: rgba(255,255,255,.35); }
 
+/* ─────────────── RHYTHM TAG ─────────── */
+.rhythm-tag {
+  display: inline-block;
+  background: var(--sage-lt);
+  color: var(--forest-md);
+  font-size: .6rem;
+  font-style: normal;
+  letter-spacing: .07em;
+  padding: .08rem .42rem;
+  border-radius: 1rem;
+  margin-left: .45rem;
+  vertical-align: middle;
+  font-weight: 500;
+}
+
+/* ─────────────── FULLSCREEN PLAYER ──── */
+#fs-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--forest);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.4rem;
+  transform: translateY(100%);
+  transition: transform .38s cubic-bezier(.32,0,.22,1);
+}
+#fs-overlay.open { transform: translateY(0); }
+#fs-close {
+  position: absolute;
+  top: 1.2rem; right: 1.4rem;
+  background: none; border: none;
+  color: rgba(255,255,255,.38);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: .4rem;
+  line-height: 1;
+  transition: color .2s;
+}
+#fs-close:hover { color: rgba(255,255,255,.75); }
+#fs-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  font-style: italic;
+  color: rgba(255,255,255,.62);
+  text-align: center;
+  padding: 0 3.5rem;
+}
+#fs-timer {
+  font-family: 'Inter', sans-serif;
+  font-size: 2.4rem;
+  font-weight: 300;
+  color: rgba(255,255,255,.48);
+  letter-spacing: .06em;
+  line-height: 1;
+}
+#fs-orb-wrap {
+  position: relative;
+  width: 280px; height: 280px;
+  display: flex; align-items: center; justify-content: center;
+}
+@media (min-width: 640px) {
+  #fs-orb-wrap { width: 380px; height: 380px; }
+  #fs-orb { width: 220px !important; height: 220px !important; }
+  #fs-orb .breath-core { width: 118px !important; height: 118px !important; }
+}
+#fs-orb-wrap .session-arc {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  transform: rotate(-90deg);
+}
+#fs-orb {
+  width: 160px; height: 160px;
+  position: relative; z-index: 1;
+  border-color: rgba(255,255,255,.28) !important;
+  box-shadow: 0 0 18px rgba(255,255,255,.06) !important;
+}
+#fs-orb.inhale {
+  border-color: rgba(255,255,255,.55) !important;
+  box-shadow: 0 0 38px rgba(255,255,255,.12) !important;
+}
+#fs-orb.exhale {
+  border-color: rgba(255,255,255,.18) !important;
+  box-shadow: none !important;
+}
+#fs-orb .breath-core { width: 86px; height: 86px; background: rgba(255,255,255,.14) !important; }
+#fs-orb.inhale .breath-core { background: rgba(255,255,255,.27) !important; }
+#fs-orb.exhale .breath-core { background: rgba(255,255,255,.07) !important; }
+#fs-orb.complete::before, #fs-orb.complete::after { border-color: rgba(255,255,255,.42) !important; }
+#fs-phase {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.9rem;
+  font-style: italic;
+  color: rgba(255,255,255,.58);
+  text-align: center;
+  min-height: 2.4rem;
+  transform: scale(0.76);
+  transform-origin: center;
+  transition: transform 5s cubic-bezier(0.37,0,0.22,1), opacity .35s;
+}
+#fs-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .55rem;
+}
+#fs-overlay .t-btn {
+  border-color: rgba(255,255,255,.28);
+  color: rgba(255,255,255,.72);
+}
+#fs-overlay .t-btn:hover,
+#fs-overlay .t-btn.running {
+  background: rgba(255,255,255,.12);
+  border-color: rgba(255,255,255,.52);
+  color: white;
+}
+#fs-overlay[data-week="w1"]     #fs-arc-fill { stroke: rgba(123,181,160,.9); }
+#fs-overlay[data-week="w2"]     #fs-arc-fill { stroke: rgba(91,143,168,.9); }
+#fs-overlay[data-week="w3"]     #fs-arc-fill { stroke: rgba(184,160,200,.9); }
+#fs-overlay[data-week="w4"]     #fs-arc-fill { stroke: rgba(212,176,184,.9); }
+#fs-overlay[data-week="refuge"] #fs-arc-fill { stroke: rgba(92,158,138,.9); }
+
+/* ─────────────── ONBOARDING ─────────── */
+#onboard-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(45,106,84,.86);
+  z-index: 1100;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+#onboard-card {
+  background: var(--cream);
+  border-radius: 1rem;
+  padding: 2rem 1.8rem;
+  max-width: 400px; width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.28);
+  animation: up .38s ease;
+}
+#onboard-card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.48rem;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: .65rem;
+}
+#onboard-card > p {
+  font-size: .88rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 1.1rem;
+}
+#onboard-card ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+#onboard-card li {
+  font-size: .88rem;
+  line-height: 1.62;
+  padding-left: .95rem;
+  border-left: 2px solid var(--sage);
+  color: var(--text);
+}
+#onboard-card li strong { color: var(--forest); }
+#onboard-ok {
+  width: 100%;
+  background: var(--forest);
+  color: white;
+  border: none;
+  border-radius: .55rem;
+  padding: .9rem;
+  font-size: .88rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: .04em;
+  transition: background .18s;
+}
+#onboard-ok:hover { background: var(--forest-md); }
+
 /* ─────────────── INSTALL BANNER ────── */
 #install-banner {
   position: fixed;
@@ -844,12 +1033,12 @@ details[open] summary::after { content: '−'; }
         <div class="ex-body">
           <ul class="steps">
             <li><span class="sn">1</span><span>Asseyez-vous confortablement, dos droit sans être rigide. Posez les mains sur les genoux.</span></li>
-            <li><span class="sn">2</span><span>Inspirez lentement par le nez — laissez l'air entrer sans le forcer. Le cercle s'anime et vous guide.</span></li>
+            <li><span class="sn">2</span><span>Inspirez lentement par le nez — laissez l'air entrer sans le forcer. Le cercle s'anime et vous guide.<span class="rhythm-tag">5 sec · 5 sec</span></span></li>
             <li><span class="sn">3</span><span>Expirez doucement par la bouche — laissez l'air partir de lui-même, naturellement.</span></li>
             <li><span class="sn">4</span><span>Laissez le rythme s'installer. Si l'attention s'échappe, revenez sans vous juger — c'est le cœur de la pratique.</span></li>
           </ul>
           <div class="tip tip-sage">Comptez les premiers jours si ça aide. Après 3 ou 4 séances, le rythme s'installe de lui-même — et le comptage devient inutile.</div>
-          <div class="breath-guide" id="bt-1a"><div class="stones-col"><button class="t-btn stone-main" id="tb-1a" onclick="startT('1a',300)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('1a',300)">Recommencer</button></div><div class="breath-orb" id="bf-1a"><div class="breath-core"></div></div><span class="breath-phase" id="bl-1a"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-1a" r="72"/></svg></div>
+          <div class="breath-guide" id="bt-1a"><div class="stones-col"><button class="t-btn stone-main" id="tb-1a" onclick="openFs('1a',300)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('1a',300)">Recommencer</button></div><div class="breath-orb" id="bf-1a"><div class="breath-core"></div></div><span class="breath-phase" id="bl-1a"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-1a" r="72"/></svg></div>
         </div>
       </div>
     </div>
@@ -895,13 +1084,13 @@ details[open] summary::after { content: '−'; }
         </div>
         <div class="ex-body">
           <ul class="steps">
-            <li><span class="sn">1</span><span>Commencez par <strong>1 minute</strong> de respiration 5-5 pour retrouver le rythme.</span></li>
+            <li><span class="sn">1</span><span>Commencez par <strong>1 minute</strong> de respiration 5-5 pour retrouver le rythme.<span class="rhythm-tag">5 sec · 5 sec</span></span></li>
             <li><span class="sn">2</span><span>Posez doucement l'attention sur la <strong>zone centrale de la poitrine</strong> — là, physiquement, où se trouve votre cœur.</span></li>
             <li><span class="sn">3</span><span>Imaginez que votre souffle entre et sort <em>par le cœur</em>, comme si cette zone respirait.</span></li>
             <li><span class="sn">4</span><span>Maintenez cette double attention — rythme et zone cardiaque — pendant les <strong>4 minutes restantes</strong>.</span></li>
           </ul>
           <div class="tip tip-blue">Si l'attention s'échappe — c'est normal. Revenir en douceur, c'est déjà l'exercice. Chaque retour est un entraînement.</div>
-          <div class="breath-guide" id="bt-2a"><div class="stones-col"><button class="t-btn stone-main" id="tb-2a" onclick="startT('2a',300)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('2a',300)">Recommencer</button></div><div class="breath-orb" id="bf-2a"><div class="breath-core"></div></div><span class="breath-phase" id="bl-2a"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-2a" r="72"/></svg></div>
+          <div class="breath-guide" id="bt-2a"><div class="stones-col"><button class="t-btn stone-main" id="tb-2a" onclick="openFs('2a',300)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('2a',300)">Recommencer</button></div><div class="breath-orb" id="bf-2a"><div class="breath-core"></div></div><span class="breath-phase" id="bl-2a"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-2a" r="72"/></svg></div>
         </div>
       </div>
     </div>
@@ -947,13 +1136,13 @@ details[open] summary::after { content: '−'; }
         </div>
         <div class="ex-body">
           <ul class="steps">
-            <li><span class="sn">1</span><span>Entrez dans le rythme : <strong>2 minutes</strong> de respiration et présence au cœur.</span></li>
+            <li><span class="sn">1</span><span>Entrez dans le rythme : <strong>2 minutes</strong> de respiration et présence au cœur.<span class="rhythm-tag">5 sec · 5 sec</span></span></li>
             <li><span class="sn">2</span><span>Évoquez un <strong>souvenir précis et concret</strong> — une scène, pas une idée. Un moment de douceur, de gratitude, de paix.</span></li>
             <li><span class="sn">3</span><span>Laissez la sensation se déployer dans la poitrine, naturellement. Ne forcez rien.</span></li>
             <li><span class="sn">4</span><span>Respirez <em>depuis</em> cette sensation pendant les <strong>3 minutes restantes</strong>.</span></li>
           </ul>
           <div class="tip tip-amber">Si rien de fort ne vient : un animal aimé, la lumière de fin d'après-midi, la chaleur d'une tasse dans les mains. La simplicité touche toujours plus profond que l'effort.</div>
-          <div class="breath-guide" id="bt-3a"><div class="stones-col"><button class="t-btn stone-main" id="tb-3a" onclick="startT('3a',300)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('3a',300)">Recommencer</button></div><div class="breath-orb" id="bf-3a"><div class="breath-core"></div></div><span class="breath-phase" id="bl-3a"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-3a" r="72"/></svg></div>
+          <div class="breath-guide" id="bt-3a"><div class="stones-col"><button class="t-btn stone-main" id="tb-3a" onclick="openFs('3a',300)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('3a',300)">Recommencer</button></div><div class="breath-orb" id="bf-3a"><div class="breath-core"></div></div><span class="breath-phase" id="bl-3a"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-3a" r="72"/></svg></div>
         </div>
       </div>
     </div>
@@ -1000,12 +1189,12 @@ details[open] summary::after { content: '−'; }
         </div>
         <div class="ex-body">
           <ul class="steps">
-            <li><span class="sn">1</span><span>Respiration 5-5 · <strong>1 minute</strong> — Retrouver le rythme.</span></li>
+            <li><span class="sn">1</span><span>Respiration 5-5 · <strong>1 minute</strong> — Retrouver le rythme.<span class="rhythm-tag">5 sec · 5 sec</span></span></li>
             <li><span class="sn">2</span><span>Présence au cœur · <strong>1 minute</strong> — Porter l'attention sur la zone cardiaque.</span></li>
             <li><span class="sn">3</span><span>Ancre douce · <strong>3 minutes</strong> — Évoquer et habiter la sensation.</span></li>
           </ul>
           <div class="tip tip-sage">En semaine 4, la séance doit être fluide et naturelle. Si vous ressentez de la résistance, revenez à la semaine 1 — un rythme simple suffit toujours.</div>
-          <div class="breath-guide" id="bt-4a"><div class="stones-col"><button class="t-btn stone-main" id="tb-4a" onclick="startT('4a',300)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('4a',300)">Recommencer</button></div><div class="breath-orb" id="bf-4a"><div class="breath-core"></div></div><span class="breath-phase" id="bl-4a"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-4a" r="72"/></svg></div>
+          <div class="breath-guide" id="bt-4a"><div class="stones-col"><button class="t-btn stone-main" id="tb-4a" onclick="openFs('4a',300)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('4a',300)">Recommencer</button></div><div class="breath-orb" id="bf-4a"><div class="breath-core"></div></div><span class="breath-phase" id="bl-4a"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-4a" r="72"/></svg></div>
         </div>
       </div>
 
@@ -1025,7 +1214,7 @@ details[open] summary::after { content: '−'; }
             <li><span class="sn">3</span><span>Une pensée simple et concrète — un instant de la journée pour lequel vous êtes reconnaissant.</span></li>
           </ul>
           <div class="tip tip-gold">Moments idéaux : avant une réunion difficile, en attendant que l'eau bouille, après une interaction tendue. Imperceptible pour l'entourage — puissant pour vous.</div>
-          <div class="breath-guide" id="bt-4b"><div class="stones-col"><button class="t-btn stone-main" id="tb-4b" onclick="startT('4b',30)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('4b',30)">Recommencer</button></div><div class="breath-orb" id="bf-4b"><div class="breath-core"></div></div><span class="breath-phase" id="bl-4b"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-4b" r="72"/></svg></div>
+          <div class="breath-guide" id="bt-4b"><div class="stones-col"><button class="t-btn stone-main" id="tb-4b" onclick="openFs('4b',30)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('4b',30)">Recommencer</button></div><div class="breath-orb" id="bf-4b"><div class="breath-core"></div></div><span class="breath-phase" id="bl-4b"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-4b" r="72"/></svg></div>
         </div>
       </div>
 
@@ -1046,7 +1235,7 @@ details[open] summary::after { content: '−'; }
             <li><span class="sn">4</span><span>Ancrez ce souvenir. Le cerveau apprend à reconnaître et reproduire cet état.</span></li>
           </ul>
           <div class="tip tip-blue">Même les jours difficiles contiennent un tel moment. Apprendre à le repérer, c'est déjà de la cohérence.</div>
-          <div class="breath-guide" id="bt-4c"><div class="stones-col"><button class="t-btn stone-main" id="tb-4c" onclick="startT('4c',300)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('4c',300)">Recommencer</button></div><div class="breath-orb" id="bf-4c"><div class="breath-core"></div></div><span class="breath-phase" id="bl-4c"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-4c" r="72"/></svg></div>
+          <div class="breath-guide" id="bt-4c"><div class="stones-col"><button class="t-btn stone-main" id="tb-4c" onclick="openFs('4c',300)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('4c',300)">Recommencer</button></div><div class="breath-orb" id="bf-4c"><div class="breath-core"></div></div><span class="breath-phase" id="bl-4c"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-4c" r="72"/></svg></div>
         </div>
       </div>
 
@@ -1110,7 +1299,7 @@ details[open] summary::after { content: '−'; }
             <li><span class="sn">5</span><span>Si des pensées arrivent — laissez-les passer sans les suivre.</span></li>
           </ul>
           <div class="tip tip-sage">Vous ne faites rien de compliqué. Vous apprenez à vous arrêter.</div>
-          <div class="breath-guide" id="bt-ra"><div class="stones-col"><button class="t-btn stone-main" id="tb-ra" onclick="startT('ra',180)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('ra',180)">Recommencer</button></div><div class="breath-orb" id="bf-ra"><div class="breath-core"></div></div><span class="breath-phase" id="bl-ra"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-ra" r="72"/></svg></div>
+          <div class="breath-guide" id="bt-ra"><div class="stones-col"><button class="t-btn stone-main" id="tb-ra" onclick="openFs('ra',180)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('ra',180)">Recommencer</button></div><div class="breath-orb" id="bf-ra"><div class="breath-core"></div></div><span class="breath-phase" id="bl-ra"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-ra" r="72"/></svg></div>
         </div>
       </div>
 
@@ -1131,7 +1320,7 @@ details[open] summary::after { content: '−'; }
             <li><span class="sn">4</span><span>Répétez jusqu'à sentir les épaules s'alléger.</span></li>
           </ul>
           <div class="tip tip-sage">Ce son d'expiration active directement le nerf vague. C'est physiologique — pas de la magie. Accessible même aux toilettes du bureau.</div>
-          <div class="breath-guide" id="bt-rb"><div class="stones-col"><button class="t-btn stone-main" id="tb-rb" onclick="startT('rb',120)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('rb',120)">Recommencer</button></div><div class="breath-orb" id="bf-rb"><div class="breath-core"></div></div><span class="breath-phase" id="bl-rb"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-rb" r="72"/></svg></div>
+          <div class="breath-guide" id="bt-rb"><div class="stones-col"><button class="t-btn stone-main" id="tb-rb" onclick="openFs('rb',120)">▶ Début</button><button class="t-btn stone-sec" onclick="resetT('rb',120)">Recommencer</button></div><div class="breath-orb" id="bf-rb"><div class="breath-core"></div></div><span class="breath-phase" id="bl-rb"></span><svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true"><circle class="arc-track" r="72"/><circle class="arc-fill" id="arc-fill-rb" r="72"/></svg></div>
         </div>
       </div>
 
@@ -1439,6 +1628,81 @@ function gentleVibrate(isInhale) {
 /* ── Timers ── */
 const TM = {};
 
+/* ── Fullscreen Player ── */
+let fsActive = false;
+let fsId = null;
+let fsDur = null;
+
+function idToWeek(id) {
+  if (id.startsWith('1')) return 'w1';
+  if (id.startsWith('2')) return 'w2';
+  if (id.startsWith('3')) return 'w3';
+  if (id.startsWith('4')) return 'w4';
+  return 'refuge';
+}
+
+function syncFs(id) {
+  if (!fsActive || fsId !== id) return;
+  const bf    = document.getElementById('bf-' + id);
+  const bl    = document.getElementById('bl-' + id);
+  const arcEl = document.getElementById('arc-fill-' + id);
+  const td    = document.getElementById('td-' + id);
+  const tb    = document.getElementById('tb-' + id);
+  const fsOrb     = document.getElementById('fs-orb');
+  const fsPhase   = document.getElementById('fs-phase');
+  const fsArcFill = document.getElementById('fs-arc-fill');
+  const fsTimer   = document.getElementById('fs-timer');
+  const fsBtn     = document.getElementById('fs-main-btn');
+  if (bf && fsOrb) {
+    ['inhale','exhale','complete'].forEach(c => fsOrb.classList.toggle(c, bf.classList.contains(c)));
+    if (fsPhase) fsPhase.style.transform = `scale(${bf.classList.contains('inhale') ? 1 : 0.76})`;
+  }
+  if (bl && fsPhase) fsPhase.textContent = bl.textContent;
+  if (arcEl && fsArcFill) {
+    if (arcEl.style.strokeDashoffset) fsArcFill.style.strokeDashoffset = arcEl.style.strokeDashoffset;
+    if (arcEl.style.opacity !== '') fsArcFill.style.opacity = arcEl.style.opacity;
+  }
+  if (fsTimer) {
+    if (td) fsTimer.textContent = td.textContent;
+    else if (TM[id]) fsTimer.textContent = TM[id].rem > 0 ? fmt(TM[id].rem) : '✓';
+  }
+  if (tb && fsBtn) {
+    fsBtn.textContent = tb.textContent;
+    fsBtn.classList.toggle('running', tb.classList.contains('running'));
+  }
+}
+
+function openFs(id, dur) {
+  const bt   = document.getElementById('bt-' + id);
+  const exEl = bt ? bt.closest('.ex') : null;
+  const title = exEl ? (exEl.querySelector('strong')?.textContent ?? '') : '';
+  document.getElementById('fs-title').textContent = title;
+  document.getElementById('fs-timer').textContent = fmt(dur);
+  const fsArcFill = document.getElementById('fs-arc-fill');
+  fsArcFill.style.strokeDashoffset = '452';
+  fsArcFill.style.opacity = '1';
+  const fsPhase = document.getElementById('fs-phase');
+  fsPhase.textContent = '';
+  fsPhase.style.transform = 'scale(0.76)';
+  const fsOrb = document.getElementById('fs-orb');
+  fsOrb.classList.remove('inhale','exhale','complete');
+  document.getElementById('fs-overlay').dataset.week = idToWeek(id);
+  fsActive = true; fsId = id; fsDur = dur;
+  document.getElementById('fs-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  startT(id, dur);
+}
+
+function closeFs() {
+  if (fsId) pauseT(fsId);
+  fsActive = false; fsId = null; fsDur = null;
+  document.getElementById('fs-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function fsBtnClick() { if (fsId) startT(fsId, fsDur); }
+function fsResetClick() { if (fsId && fsDur) resetT(fsId, fsDur); }
+
 function fmt(s) {
   if (s < 0) s = 0;
   return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
@@ -1465,6 +1729,7 @@ function pauseT(id) {
   if (bt) bt.classList.remove('go');
   if (bf) bf.classList.remove('inhale', 'exhale');
   if (bl) bl.textContent = '';
+  syncFs(id);
 }
 
 function startT(id, dur) {
@@ -1503,10 +1768,12 @@ function startT(id, dur) {
       }
     }
     TM[id].phase = phase;
+    syncFs(id);
     TM[id].breath = setTimeout(breathCycle, 5000);
   }
 
   TM[id] = { on: true, rem, phase };
+  syncFs(id);
   breathCycle();
 
   TM[id].iv = setInterval(() => {
@@ -1514,6 +1781,7 @@ function startT(id, dur) {
     TM[id].rem = rem;
     if (td) td.textContent = rem > 0 ? fmt(rem) : '✓';
     if (arcEl) arcEl.style.strokeDashoffset = Math.max(0, 452 * (rem / dur));
+    syncFs(id);
     if (rem <= 0) {
       clearInterval(TM[id].iv);
       clearTimeout(TM[id].breath);
@@ -1534,6 +1802,12 @@ function startT(id, dur) {
       }
       playCompletion();
       autoValidateNextDay();
+      if (fsActive && fsId === id) {
+        const fsTimerEl = document.getElementById('fs-timer');
+        if (fsTimerEl) fsTimerEl.textContent = '✓';
+        syncFs(id);
+        setTimeout(() => closeFs(), 3500);
+      }
     }
   }, 1000);
 }
@@ -1556,6 +1830,7 @@ function resetT(id, dur) {
   if (bl) bl.textContent = '';
   const arcEl = document.getElementById('arc-fill-' + id);
   if (arcEl) { arcEl.style.strokeDashoffset = '452'; arcEl.style.opacity = '1'; }
+  syncFs(id);
 }
 
 /* ── Init ── */
@@ -1569,6 +1844,39 @@ refreshProgress();
 <!-- ═══════════════════════════════
      PWA — Service Worker + Install
 ════════════════════════════════ -->
+<!-- ═══════════ FULLSCREEN PLAYER ════════ -->
+<div id="fs-overlay">
+  <button id="fs-close" onclick="closeFs()" aria-label="Fermer">✕</button>
+  <div id="fs-title"></div>
+  <div id="fs-timer">0:00</div>
+  <div id="fs-orb-wrap">
+    <div class="breath-orb" id="fs-orb"><div class="breath-core"></div></div>
+    <svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true">
+      <circle class="arc-track" r="72"/>
+      <circle class="arc-fill" id="fs-arc-fill" r="72"/>
+    </svg>
+  </div>
+  <span id="fs-phase"></span>
+  <div id="fs-btns">
+    <button class="t-btn stone-main" id="fs-main-btn" onclick="fsBtnClick()">⏸ Pause</button>
+    <button class="t-btn stone-sec" id="fs-reset-btn" onclick="fsResetClick()">Recommencer</button>
+  </div>
+</div>
+
+<!-- ═══════════ ONBOARDING ═══════════════ -->
+<div id="onboard-overlay">
+  <div id="onboard-card">
+    <h2>Bienvenue 🌿</h2>
+    <p>Voici comment fonctionne l'application :</p>
+    <ul>
+      <li><strong>Les cases de jours</strong> en haut de chaque semaine — touchez-les pour valider une journée. Elles se cochent aussi automatiquement à la fin d'une séance.</li>
+      <li><strong>Le bouton +</strong> sur chaque exercice — ouvre le guide détaillé et le lecteur de respiration guidée.</li>
+      <li><strong>▶ Début</strong> — lance la séance en plein écran. Le cercle s'anime et vous guide souffle par souffle.</li>
+    </ul>
+    <button id="onboard-ok">C'est parti</button>
+  </div>
+</div>
+
 <div id="install-banner" style="display:none">
   <span class="ib-icon">🌿</span>
   <div class="ib-text">
@@ -1656,6 +1964,18 @@ async function requestNotifPermission() {
 
 /* Demande de permission après 30 secondes d'utilisation */
 setTimeout(requestNotifPermission, 30000);
+
+/* ── Onboarding J1 ── */
+(function() {
+  const overlay = document.getElementById('onboard-overlay');
+  if (!localStorage.getItem('rc-onboarded')) {
+    setTimeout(() => { overlay.style.display = 'flex'; }, 700);
+  }
+  document.getElementById('onboard-ok').addEventListener('click', () => {
+    localStorage.setItem('rc-onboarded', '1');
+    overlay.style.display = 'none';
+  });
+})();
 </script>
 </body>
 </html>
