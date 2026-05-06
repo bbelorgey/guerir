@@ -749,8 +749,54 @@ details[open] summary::after { content: '−'; }
   flex-direction: column;
   align-items: center;
   gap: .48rem;
-  padding: 1.1rem 0 .85rem;
+  padding: 1.3rem 0 1rem;
   position: relative;
+  isolation: isolate;
+}
+/* Cercles décoratifs autour de l'orbe — même langage que le header */
+.orb-launch::before {
+  content: '';
+  position: absolute;
+  inset: -24px -40px;
+  z-index: -1;
+  pointer-events: none;
+}
+#p-w1    .orb-launch::before,
+#p-refuge .orb-launch::before {
+  background:
+    radial-gradient(circle 55px   at 50% 46%, rgba(92,158,138,.06)  0%, transparent 100%),
+    radial-gradient(circle 22px   at 74% 20%, rgba(201,185,154,.11) 0%, transparent 100%),
+    radial-gradient(circle        at 50% 46%, transparent 50px, rgba(92,158,138,.13) 50px, rgba(92,158,138,.13) 52px, transparent 52px),
+    radial-gradient(circle        at 50% 46%, transparent 68px, rgba(92,158,138,.07) 68px, rgba(92,158,138,.07) 70px, transparent 70px),
+    radial-gradient(circle        at 50% 46%, transparent 90px, rgba(92,158,138,.04) 90px, rgba(92,158,138,.04) 92px, transparent 92px),
+    radial-gradient(circle 125px  at 50% 46%, rgba(92,158,138,.025) 0%, transparent 100%);
+}
+#p-w2 .orb-launch::before {
+  background:
+    radial-gradient(circle 55px   at 50% 46%, rgba(91,143,168,.06)  0%, transparent 100%),
+    radial-gradient(circle 22px   at 74% 20%, rgba(201,185,154,.11) 0%, transparent 100%),
+    radial-gradient(circle        at 50% 46%, transparent 50px, rgba(91,143,168,.13) 50px, rgba(91,143,168,.13) 52px, transparent 52px),
+    radial-gradient(circle        at 50% 46%, transparent 68px, rgba(91,143,168,.07) 68px, rgba(91,143,168,.07) 70px, transparent 70px),
+    radial-gradient(circle        at 50% 46%, transparent 90px, rgba(91,143,168,.04) 90px, rgba(91,143,168,.04) 92px, transparent 92px),
+    radial-gradient(circle 125px  at 50% 46%, rgba(91,143,168,.025) 0%, transparent 100%);
+}
+#p-w3 .orb-launch::before {
+  background:
+    radial-gradient(circle 55px   at 50% 46%, rgba(184,160,200,.06) 0%, transparent 100%),
+    radial-gradient(circle 22px   at 74% 20%, rgba(201,185,154,.11) 0%, transparent 100%),
+    radial-gradient(circle        at 50% 46%, transparent 50px, rgba(184,160,200,.13) 50px, rgba(184,160,200,.13) 52px, transparent 52px),
+    radial-gradient(circle        at 50% 46%, transparent 68px, rgba(184,160,200,.07) 68px, rgba(184,160,200,.07) 70px, transparent 70px),
+    radial-gradient(circle        at 50% 46%, transparent 90px, rgba(184,160,200,.04) 90px, rgba(184,160,200,.04) 92px, transparent 92px),
+    radial-gradient(circle 125px  at 50% 46%, rgba(184,160,200,.025) 0%, transparent 100%);
+}
+#p-w4 .orb-launch::before {
+  background:
+    radial-gradient(circle 55px   at 50% 46%, rgba(212,176,184,.06) 0%, transparent 100%),
+    radial-gradient(circle 22px   at 74% 20%, rgba(201,185,154,.11) 0%, transparent 100%),
+    radial-gradient(circle        at 50% 46%, transparent 50px, rgba(212,176,184,.13) 50px, rgba(212,176,184,.13) 52px, transparent 52px),
+    radial-gradient(circle        at 50% 46%, transparent 68px, rgba(212,176,184,.07) 68px, rgba(212,176,184,.07) 70px, transparent 70px),
+    radial-gradient(circle        at 50% 46%, transparent 90px, rgba(212,176,184,.04) 90px, rgba(212,176,184,.04) 92px, transparent 92px),
+    radial-gradient(circle 125px  at 50% 46%, rgba(212,176,184,.025) 0%, transparent 100%);
 }
 @keyframes orb-breathe {
   0%,100% { transform: scale(1);    box-shadow: 0 0 10px rgba(92,158,138,.08); }
