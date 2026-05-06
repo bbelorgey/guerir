@@ -330,7 +330,7 @@ main {
   display: block;
   margin-top: .14rem;
 }
-.ex-arrow { color: var(--muted); font-size: .85rem; transition: transform .24s; flex-shrink: 0; }
+.ex-arrow { color: var(--forest-md); font-size: 1.2rem; font-weight: 600; transition: transform .24s; flex-shrink: 0; line-height: 1; }
 .ex.open .ex-arrow { transform: rotate(180deg); }
 
 .ex-body {
@@ -564,6 +564,19 @@ main {
   flex-shrink: 0;
 }
 .sense-btn.on { border-color: var(--sage); color: var(--forest); }
+.vol-slider {
+  width: 4.5rem; height: 3px; cursor: pointer;
+  -webkit-appearance: none; appearance: none;
+  background: var(--warm); border-radius: 2px; outline: none; flex-shrink: 0;
+}
+.vol-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 13px; height: 13px;
+  border-radius: 50%; background: var(--forest); cursor: pointer;
+}
+.vol-slider::-moz-range-thumb {
+  width: 13px; height: 13px; border: none;
+  border-radius: 50%; background: var(--forest); cursor: pointer;
+}
 
 /* ─────────────── RECAP ──────────────── */
 .recap-block {
@@ -784,7 +797,8 @@ details[open] summary::after { content: '−'; }
   <span class="pb-label">Progression</span>
   <div class="pb-track"><div class="pb-fill" id="pb-fill" style="width:0%"></div></div>
   <span class="pb-count" id="pb-count">0 / 28</span>
-  <button class="sense-btn" id="sense-toggle" title="Son et vibration">🔇</button>
+  <button class="sense-btn on" id="sense-toggle" title="Son et vibration">🔔</button>
+  <input type="range" id="vol-slider" class="vol-slider" min="0.1" max="1" step="0.1" value="0.8" title="Volume">
 </div>
 
 <!-- ═══════════ TABS ═════════════ -->
@@ -829,7 +843,7 @@ details[open] summary::after { content: '−'; }
         <div class="ex-body">
           <ul class="steps">
             <li><span class="sn">1</span><span>Asseyez-vous confortablement, dos droit sans être rigide. Posez les mains sur les genoux.</span></li>
-            <li><span class="sn">2</span><span>Inspirez lentement par le nez — laissez l'air entrer sans le forcer. Le guide s'allume.</span></li>
+            <li><span class="sn">2</span><span>Inspirez lentement par le nez — laissez l'air entrer sans le forcer. Le cercle s'anime et vous guide.</span></li>
             <li><span class="sn">3</span><span>Expirez doucement par la bouche — laissez l'air partir de lui-même, naturellement.</span></li>
             <li><span class="sn">4</span><span>Laissez le rythme s'installer. Si l'attention s'échappe, revenez sans vous juger — c'est le cœur de la pratique.</span></li>
           </ul>
@@ -1305,9 +1319,19 @@ function toggleEx(id) {
 }
 
 /* ── Son & Vibration ── */
-let soundOn = false;
+let soundOn = true;
 let audioCtx = null;
 let reverbNode = null;
+let masterVol = 0.8;
+
+/* Init AudioContext au premier geste — obligatoire navigateur */
+document.addEventListener('click', async function initCtx() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    await audioCtx.resume();
+  }
+  document.removeEventListener('click', initCtx);
+}, true);
 
 function ensureReverb() {
   if (reverbNode || !audioCtx) return;
@@ -1332,8 +1356,12 @@ document.getElementById('sense-toggle').addEventListener('click', async function
   if (soundOn) {
     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     if (audioCtx.state !== 'running') await audioCtx.resume();
-    playBowl(true); /* son de confirmation immédiat */
+    playBowl(true);
   }
+});
+
+document.getElementById('vol-slider').addEventListener('input', function() {
+  masterVol = parseFloat(this.value);
 });
 
 function makeBowl(freq, startAt, vol, dur = 2.4) {
@@ -1374,7 +1402,7 @@ async function playBowl(isInhale) {
   if (!soundOn || !audioCtx) return;
   try {
     if (audioCtx.state !== 'running') await audioCtx.resume();
-    makeBowl(isInhale ? 432 : 216, audioCtx.currentTime, isInhale ? 0.15 : 0.20);
+    makeBowl(isInhale ? 432 : 216, audioCtx.currentTime, (isInhale ? 0.28 : 0.38) * masterVol);
   } catch(e) { console.warn('audio:', e); }
 }
 
@@ -1394,7 +1422,7 @@ async function playCompletion() {
       osc.frequency.value = freq;
       const t = now + i * 0.18;
       gain.gain.setValueAtTime(0, t);
-      gain.gain.linearRampToValueAtTime(0.11, t + 0.012);
+      gain.gain.linearRampToValueAtTime(0.18 * masterVol, t + 0.012);
       gain.gain.exponentialRampToValueAtTime(0.001, t + 2.2);
       osc.start(t);
       osc.stop(t + 2.25);
