@@ -1007,27 +1007,17 @@ details[open] summary::after { content: '−'; }
   margin-bottom: .65rem;
 }
 #onboard-card > p {
-  font-size: .88rem;
-  color: var(--muted);
-  line-height: 1.6;
-  margin-bottom: 1.1rem;
-}
-#onboard-card ul {
-  list-style: none;
-  padding: 0;
-  margin-bottom: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: .75rem;
-}
-#onboard-card li {
-  font-size: .88rem;
-  line-height: 1.62;
-  padding-left: .95rem;
-  border-left: 2px solid var(--sage);
+  font-size: .9rem;
   color: var(--text);
+  line-height: 1.7;
+  margin-bottom: 1rem;
 }
-#onboard-card li strong { color: var(--forest); }
+.ob-accent {
+  width: 36px; height: 3px;
+  background: var(--sage);
+  border-radius: 2px;
+  margin: 0 auto 1.4rem;
+}
 #onboard-ok {
   width: 100%;
   background: var(--forest);
@@ -1974,14 +1964,11 @@ refreshProgress();
 <!-- ═══════════ ONBOARDING ═══════════════ -->
 <div id="onboard-overlay">
   <div id="onboard-card">
-    <h2>Bienvenue 🌿</h2>
-    <p>Voici comment fonctionne l'application :</p>
-    <ul>
-      <li><strong>Les cases de jours</strong> en haut de chaque semaine — touchez-les pour valider une journée. Elles se cochent aussi automatiquement à la fin d'une séance.</li>
-      <li><strong>Le bouton +</strong> sur chaque exercice — ouvre le guide détaillé et le lecteur de respiration guidée.</li>
-      <li><strong>▶ Début</strong> — lance la séance en plein écran. Le cercle s'anime et vous guide souffle par souffle.</li>
-    </ul>
-    <button id="onboard-ok">C'est parti</button>
+    <div class="ob-accent"></div>
+    <h2>Votre cœur retrouve son calme</h2>
+    <p>La cohérence cardiaque guide votre cœur vers son rythme naturel — là où l'anxiété s'allège, les pensées se clarifient et la paix intérieure s'installe.</p>
+    <p>Quelques minutes par jour suffisent. Votre corps sait déjà comment — laissez-le se souvenir.</p>
+    <button id="onboard-ok">Je commence</button>
   </div>
 </div>
 
