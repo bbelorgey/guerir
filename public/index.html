@@ -981,20 +981,24 @@ details[open] summary::after { content: '−'; }
 }
 #fs-close:hover { color: rgba(255,255,255,.75); }
 #fs-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.1rem;
+  position: absolute;
+  top: 1.2rem; left: 1.4rem;
+  font-family: 'Inter', sans-serif;
+  font-size: .6rem;
   font-weight: 400;
-  font-style: italic;
-  color: rgba(255,255,255,.62);
-  text-align: center;
-  padding: 0 3.5rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.32);
+}
+#fs-breath-info {
+  display: flex; flex-direction: column; align-items: center; gap: .45rem;
 }
 #fs-timer {
   font-family: 'Inter', sans-serif;
-  font-size: 2.4rem;
-  font-weight: 300;
-  color: rgba(255,255,255,.48);
-  letter-spacing: .06em;
+  font-size: .7rem;
+  font-weight: 400;
+  color: rgba(255,255,255,.3);
+  letter-spacing: .08em;
   line-height: 1;
 }
 #fs-orb-wrap {
@@ -1033,11 +1037,11 @@ details[open] summary::after { content: '−'; }
 #fs-orb.complete::before, #fs-orb.complete::after { border-color: rgba(255,255,255,.42) !important; }
 #fs-phase {
   font-family: 'Playfair Display', serif;
-  font-size: 1.9rem;
+  font-size: 2.2rem;
   font-style: italic;
-  color: rgba(255,255,255,.58);
+  color: rgba(255,255,255,.9);
   text-align: center;
-  min-height: 2.4rem;
+  min-height: 2.8rem;
   transform: scale(0.76);
   transform-origin: center;
   transition: transform 5s cubic-bezier(0.37,0,0.22,1), opacity .35s;
@@ -2072,7 +2076,6 @@ initSettings();
 <div id="fs-overlay">
   <button id="fs-close" onclick="closeFs()" aria-label="Fermer">✕</button>
   <div id="fs-title"></div>
-  <div id="fs-timer">0:00</div>
   <div id="fs-orb-wrap">
     <div class="breath-orb" id="fs-orb"><div class="breath-core"></div></div>
     <svg class="session-arc" viewBox="-80 -80 160 160" aria-hidden="true">
@@ -2080,7 +2083,10 @@ initSettings();
       <circle class="arc-fill" id="fs-arc-fill" r="72"/>
     </svg>
   </div>
-  <span id="fs-phase"></span>
+  <div id="fs-breath-info">
+    <span id="fs-phase"></span>
+    <div id="fs-timer">0:00</div>
+  </div>
   <div id="fs-btns">
     <button class="t-btn stone-main" id="fs-main-btn" onclick="fsBtnClick()">⏸ Pause</button>
     <button class="t-btn stone-sec" id="fs-reset-btn" onclick="fsResetClick()">Recommencer</button>
