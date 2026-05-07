@@ -580,6 +580,89 @@ main {
   border-radius: 50%; background: var(--forest); cursor: pointer;
 }
 
+/* ─────────────── SETTINGS ──────────────── */
+.settings-btn {
+  position: absolute; top: .9rem; right: 1rem;
+  background: none; border: none;
+  font-size: 1.1rem; cursor: pointer;
+  color: rgba(255,255,255,.5);
+  transition: color .18s; padding: .4rem;
+  z-index: 1;
+}
+.settings-btn:hover { color: white; }
+
+#settings-overlay {
+  position: fixed; inset: 0; z-index: 900;
+  display: flex; align-items: flex-end;
+  background: rgba(0,0,0,0);
+  pointer-events: none;
+  transition: background .3s;
+}
+#settings-overlay.open { background: rgba(0,0,0,.42); pointer-events: auto; }
+
+#settings-panel {
+  background: var(--cream);
+  width: 100%; max-width: 520px; margin: 0 auto;
+  border-radius: 1.2rem 1.2rem 0 0;
+  padding: 1.5rem 1.6rem 2.5rem;
+  transform: translateY(100%);
+  transition: transform .32s cubic-bezier(.32,0,.22,1);
+  max-height: 90vh; overflow-y: auto;
+}
+#settings-overlay.open #settings-panel { transform: translateY(0); }
+
+.settings-hd {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1.6rem;
+}
+.settings-hd h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem; font-weight: 400; color: var(--text);
+}
+.settings-close {
+  background: none; border: none; font-size: 1.2rem;
+  cursor: pointer; color: var(--muted); padding: .3rem;
+}
+.stg-sec { margin-bottom: 1.4rem; }
+.stg-sec-title {
+  font-size: .6rem; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: .7rem;
+}
+.stg-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .65rem 0; border-bottom: 1px solid var(--warm);
+}
+.stg-row:last-child { border-bottom: none; }
+.stg-row label:first-child { font-size: .9rem; color: var(--text); }
+.toggle { position: relative; width: 42px; height: 24px; flex-shrink: 0; }
+.toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+.toggle-track {
+  position: absolute; inset: 0; background: var(--warm);
+  border-radius: 12px; cursor: pointer; transition: background .2s;
+}
+.toggle-track::after {
+  content: ''; position: absolute;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: white; top: 3px; left: 3px;
+  transition: transform .2s; box-shadow: 0 1px 3px rgba(0,0,0,.15);
+}
+.toggle input:checked + .toggle-track { background: var(--sage); }
+.toggle input:checked + .toggle-track::after { transform: translateX(18px); }
+#stg-vol-row { gap: 1rem; }
+#stg-vol-row .vol-slider { flex: 1; }
+.share-btns { display: flex; gap: .55rem; margin-top: .9rem; flex-wrap: wrap; }
+.share-btn {
+  flex: 1; min-width: 72px;
+  padding: .65rem .4rem;
+  border: 1px solid var(--warm); border-radius: .5rem;
+  background: white; font-size: .7rem; font-family: 'Inter', sans-serif;
+  cursor: pointer; display: flex; flex-direction: column;
+  align-items: center; gap: .28rem; color: var(--text);
+  transition: background .18s, border-color .18s;
+}
+.share-btn:hover { background: var(--sage-lt); border-color: var(--sage); }
+.share-btn .sb-ico { font-size: 1rem; line-height: 1; }
+
 /* ─────────────── RECAP ──────────────── */
 .recap-block {
   color: var(--text);
@@ -1080,6 +1163,7 @@ details[open] summary::after { content: '−'; }
 <!-- ═══════════ HEADER ═══════════ -->
 <header>
 
+  <button class="settings-btn" onclick="openSettings()" aria-label="Réglages">⚙</button>
   <h1>Retrouver <em>le Calme</em></h1>
   <p class="h-sub">Cohérence cardiaque — l'harmonie naturelle du cœur</p>
 </header>
@@ -1089,8 +1173,6 @@ details[open] summary::after { content: '−'; }
   <span class="pb-label">Moments de calme</span>
   <div class="pb-track"><div class="pb-fill" id="pb-fill" style="width:0%"></div></div>
   <span class="pb-count" id="pb-count">0 moment</span>
-  <button class="sense-btn on" id="sense-toggle" title="Son et vibration">🔔</button>
-  <input type="range" id="vol-slider" class="vol-slider" min="0.1" max="1" step="0.1" value="0.8" title="Volume">
 </div>
 
 <!-- ═══════════ TABS ═════════════ -->
@@ -1637,20 +1719,61 @@ function ensureReverb() {
   reverbNode.connect(audioCtx.destination);
 }
 
-document.getElementById('sense-toggle').addEventListener('click', async function() {
-  soundOn = !soundOn;
-  this.classList.toggle('on', soundOn);
-  this.textContent = soundOn ? '🔔' : '🔇';
-  if (soundOn) {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    if (audioCtx.state !== 'running') await audioCtx.resume();
-    playBowl(true);
-  }
-});
+/* ── Settings ── */
+const SK_PREFS = 'rc_prefs_v1';
+let prefs = JSON.parse(localStorage.getItem(SK_PREFS) || '{"sound":true,"vol":0.8,"timer":true}');
 
-document.getElementById('vol-slider').addEventListener('input', function() {
-  masterVol = parseFloat(this.value);
-});
+function savePrefs() { localStorage.setItem(SK_PREFS, JSON.stringify(prefs)); }
+
+function initSettings() {
+  soundOn   = prefs.sound;
+  masterVol = prefs.vol;
+
+  const sndEl = document.getElementById('snd-toggle');
+  const volEl = document.getElementById('stg-vol');
+  const tmrEl = document.getElementById('tmr-toggle');
+  sndEl.checked = prefs.sound;
+  volEl.value   = prefs.vol;
+  tmrEl.checked = prefs.timer;
+
+  sndEl.addEventListener('change', async function() {
+    prefs.sound = this.checked; soundOn = prefs.sound; savePrefs();
+    if (soundOn) {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state !== 'running') await audioCtx.resume();
+      playBowl(true);
+    }
+  });
+  volEl.addEventListener('input', function() {
+    prefs.vol = parseFloat(this.value); masterVol = prefs.vol; savePrefs();
+  });
+  tmrEl.addEventListener('change', function() {
+    prefs.timer = this.checked; savePrefs();
+    const t = document.getElementById('fs-timer');
+    if (t) t.style.display = prefs.timer ? '' : 'none';
+  });
+}
+
+function openSettings()  { document.getElementById('settings-overlay').classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeSettings() { document.getElementById('settings-overlay').classList.remove('open'); document.body.style.overflow = ''; }
+function closeSettingsOutside(e) { if (e.target.id === 'settings-overlay') closeSettings(); }
+
+/* ── Share ── */
+const SHARE_URL  = window.location.href;
+const SHARE_TEXT = "Une pratique de cohérence cardiaque — pour retrouver l'harmonie naturelle du cœur.";
+async function shareNative() {
+  if (navigator.share) { try { await navigator.share({ title: 'Retrouver le Calme', text: SHARE_TEXT, url: SHARE_URL }); } catch(e){} }
+  else copyLink();
+}
+function shareWhatsApp() { window.open('https://wa.me/?text=' + encodeURIComponent(SHARE_TEXT + ' ' + SHARE_URL), '_blank'); }
+function shareX()        { window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(SHARE_TEXT) + '&url=' + encodeURIComponent(SHARE_URL), '_blank'); }
+function shareFacebook() { window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(SHARE_URL), '_blank'); }
+function copyLink() {
+  navigator.clipboard.writeText(SHARE_URL).then(() => {
+    const lbl = document.querySelector('#copy-btn span:last-child');
+    if (lbl) { lbl.textContent = 'Copié !'; setTimeout(() => lbl.textContent = 'Copier', 2000); }
+  });
+}
 
 function makeBowl(freq, startAt, vol, dur = 2.4) {
   ensureReverb();
@@ -1775,7 +1898,9 @@ function openFs(id, dur) {
   const exEl = bt ? bt.closest('.ex') : null;
   const title = exEl ? (exEl.querySelector('strong')?.textContent ?? '') : '';
   document.getElementById('fs-title').textContent = title;
-  document.getElementById('fs-timer').textContent = fmt(dur);
+  const fsTimerEl2 = document.getElementById('fs-timer');
+  fsTimerEl2.textContent = fmt(dur);
+  fsTimerEl2.style.display = prefs.timer ? '' : 'none';
   const fsArcFill = document.getElementById('fs-arc-fill');
   fsArcFill.style.strokeDashoffset = '452';
   fsArcFill.style.opacity = '1';
@@ -1937,6 +2062,7 @@ buildGrid('w2', 2);
 buildGrid('w3', 3);
 buildGrid('w4', 4);
 refreshProgress();
+initSettings();
 </script>
 
 <!-- ═══════════════════════════════
@@ -1962,6 +2088,53 @@ refreshProgress();
 </div>
 
 <!-- ═══════════ ONBOARDING ═══════════════ -->
+<div id="settings-overlay" onclick="closeSettingsOutside(event)">
+  <div id="settings-panel">
+    <div class="settings-hd">
+      <h3>Réglages</h3>
+      <button class="settings-close" onclick="closeSettings()">✕</button>
+    </div>
+
+    <div class="stg-sec">
+      <div class="stg-sec-title">Son</div>
+      <div class="stg-row">
+        <label>Son et vibration</label>
+        <label class="toggle">
+          <input type="checkbox" id="snd-toggle" checked>
+          <div class="toggle-track"></div>
+        </label>
+      </div>
+      <div class="stg-row" id="stg-vol-row">
+        <label>Volume</label>
+        <input type="range" id="stg-vol" class="vol-slider" min="0.1" max="1" step="0.1" value="0.8">
+      </div>
+    </div>
+
+    <div class="stg-sec">
+      <div class="stg-sec-title">Séance</div>
+      <div class="stg-row">
+        <label>Afficher le chronomètre</label>
+        <label class="toggle">
+          <input type="checkbox" id="tmr-toggle" checked>
+          <div class="toggle-track"></div>
+        </label>
+      </div>
+    </div>
+
+    <div class="stg-sec">
+      <div class="stg-sec-title">Partager</div>
+      <p style="font-size:.84rem;color:var(--muted);line-height:1.55;margin-bottom:.1rem;">Partagez cette pratique avec ceux qui pourraient en avoir besoin.</p>
+      <div class="share-btns">
+        <button class="share-btn" onclick="shareNative()"><span class="sb-ico">↗</span><span>Partager</span></button>
+        <button class="share-btn" onclick="shareWhatsApp()"><span class="sb-ico">💬</span><span>WhatsApp</span></button>
+        <button class="share-btn" onclick="shareX()"><span class="sb-ico">✕</span><span>X</span></button>
+        <button class="share-btn" onclick="shareFacebook()"><span class="sb-ico">f</span><span>Facebook</span></button>
+        <button class="share-btn" id="copy-btn" onclick="copyLink()"><span class="sb-ico">🔗</span><span>Copier</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="onboard-overlay">
   <div id="onboard-card">
     <div class="ob-accent"></div>
