@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Retrouver le Calme — Cohérence Cardiaque</title>
 
 <!-- PWA -->
@@ -98,41 +98,26 @@ header h1 em { font-style: italic; color: var(--gold); }
 }
 
 /* ─────────────── PROGRESS ───────────── */
-.progress-bar-zone {
+.moments-zone {
   background: white;
   border-bottom: 1px solid var(--warm);
-  padding: .75rem 1.4rem;
+  padding: .65rem 1.2rem .7rem;
   display: flex;
-  align-items: center;
-  gap: .9rem;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
 }
-.pb-label {
-  font-size: .58rem;
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  color: var(--muted);
-  flex-shrink: 0;
+.mdot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: white;
+  border: 1.5px solid #7BB5A0;
+  cursor: pointer;
+  transition: transform .18s ease, background .25s ease;
+  -webkit-tap-highlight-color: transparent;
 }
-.pb-track {
-  flex: 1;
-  height: 4px;
-  background: var(--warm);
-  border-radius: 2px;
-  overflow: hidden;
-}
-.pb-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--turq), var(--lav));
-  border-radius: 2px;
-  transition: width .55s ease;
-}
-.pb-count {
-  font-size: .7rem;
-  color: var(--text);
-  flex-shrink: 0;
-  min-width: 3rem;
-  text-align: right;
-}
+.mdot:hover { transform: scale(1.25); }
+.mdot.done  { background: #7BB5A0; border-color: #2D6A54; }
 
 /* ─────────────── TABS ───────────────── */
 .tabs-rail {
@@ -190,29 +175,6 @@ main {
   padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--warm);
 }
-.wk-badge {
-  flex-shrink: 0;
-  width: 3.8rem; height: 3.8rem;
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: .04rem;
-  font-size: .52rem;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-.wk-badge .bnum {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.55rem;
-  font-weight: 400;
-  line-height: 1;
-}
-.w1 .wk-badge { background: var(--sage-lt);  color: var(--sage);   border: 1px solid #9ecab8; }
-.w2 .wk-badge { background: var(--blue-lt);  color: var(--blue);   border: 1px solid #9cbdd4; }
-.w3 .wk-badge { background: var(--amber-lt); color: var(--amber);  border: 1px solid #c8b0d8; }
-.w4 .wk-badge { background: var(--rose-lt);  color: var(--rose);   border: 1px solid #e0c0cc; }
 
 .wk-meta { flex: 1; }
 .wk-over {
@@ -238,34 +200,6 @@ main {
   font-weight: 300;
 }
 
-/* ─────────────── DAYS ───────────────── */
-.days-grid {
-  display: flex;
-  justify-content: center;
-  gap: .5rem;
-  margin: .8rem 0 1rem;
-  padding: .6rem 0;
-}
-.day {
-  width: 34px; height: 34px;
-  background: white;
-  border: 1.5px solid var(--warm);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  transition: transform .18s, background .25s;
-  -webkit-tap-highlight-color: transparent;
-  font-size: .65rem; color: var(--muted);
-}
-.day:hover { transform: scale(1.12); }
-.day.done  { background: var(--forest); border-color: var(--forest); color: white; }
-
-/* Cercles — couleur de l'étape */
-#p-w1 .day.done     { background: var(--sage);   border-color: var(--sage); }
-#p-w2 .day.done     { background: var(--blue);   border-color: var(--blue); }
-#p-w3 .day.done     { background: var(--lav);    border-color: var(--lav); }
-#p-w4 .day.done     { background: var(--rose);   border-color: var(--rose); }
-#p-refuge .day.done { background: var(--turq);   border-color: var(--turq); }
 
 /* ─────────────── EXERCISE CARDS ─────── */
 .exercises { display: flex; flex-direction: column; gap: .8rem; margin-bottom: 1.4rem; }
@@ -582,12 +516,14 @@ main {
 
 /* ─────────────── SETTINGS ──────────────── */
 .settings-btn {
-  position: absolute; top: .9rem; right: 1rem;
+  position: absolute; top: .6rem; right: .6rem;
   background: none; border: none;
-  font-size: 1.1rem; cursor: pointer;
-  color: rgba(255,255,255,.5);
-  transition: color .18s; padding: .4rem;
-  z-index: 1;
+  font-size: 1.9rem; cursor: pointer;
+  color: rgba(255,255,255,.6);
+  transition: color .18s; padding: .55rem;
+  z-index: 1; line-height: 1;
+  min-width: 52px; min-height: 52px;
+  display: flex; align-items: center; justify-content: center;
 }
 .settings-btn:hover { color: white; }
 
@@ -980,6 +916,21 @@ details[open] summary::after { content: '−'; }
   transition: color .2s;
 }
 #fs-close:hover { color: rgba(255,255,255,.75); }
+#fs-sound-btn {
+  position: absolute;
+  top: 1.1rem; right: 3.8rem;
+  background: none; border: none;
+  color: rgba(255,255,255,.38);
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: .4rem;
+  line-height: 1;
+  transition: color .2s, opacity .2s;
+  min-width: 44px; min-height: 44px;
+  display: flex; align-items: center; justify-content: center;
+}
+#fs-sound-btn:hover { color: rgba(255,255,255,.75); }
+#fs-sound-btn.muted { opacity: .3; text-decoration: line-through; }
 #fs-title {
   position: absolute;
   top: 1.2rem; left: 1.4rem;
@@ -1121,6 +1072,75 @@ details[open] summary::after { content: '−'; }
 }
 #onboard-ok:hover { background: var(--forest-md); }
 
+/* ─────────────── WELCOME RESPIRATOIRE ── */
+#welcome-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(45,106,84,.82);
+  z-index: 1100;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  backdrop-filter: blur(2px);
+}
+#welcome-card {
+  background: var(--cream);
+  border-radius: 1rem;
+  padding: 2rem 1.8rem;
+  max-width: 380px; width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.28);
+  animation: up .38s ease;
+  text-align: center;
+}
+#welcome-card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.48rem;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: .65rem;
+}
+#welcome-card p {
+  font-size: .9rem;
+  color: var(--text);
+  line-height: 1.7;
+  margin-bottom: .6rem;
+}
+.wc-dur {
+  font-size: .76rem;
+  color: var(--muted);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-bottom: 1.4rem !important;
+}
+#welcome-ok {
+  width: 100%;
+  background: var(--forest);
+  color: white;
+  border: none;
+  border-radius: .55rem;
+  padding: .9rem;
+  font-size: .88rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: .04em;
+  transition: background .18s;
+  margin-bottom: .65rem;
+}
+#welcome-ok:hover { background: var(--forest-md); }
+#welcome-skip {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: .84rem;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  padding: .3rem;
+  display: block;
+  margin: 0 auto;
+}
+#welcome-skip:hover { color: var(--text); }
+
 /* ─────────────── INSTALL BANNER ────── */
 #install-banner {
   position: fixed;
@@ -1169,15 +1189,11 @@ details[open] summary::after { content: '−'; }
 
   <button class="settings-btn" onclick="openSettings()" aria-label="Réglages">⚙</button>
   <h1>Retrouver <em>le Calme</em></h1>
-  <p class="h-sub">Cohérence cardiaque — l'harmonie naturelle du cœur</p>
+  <p class="h-sub">Cohérence cardiaque<br>l'harmonie naturelle du cœur</p>
 </header>
 
-<!-- ═══════════ PROGRESS ═════════ -->
-<div class="progress-bar-zone">
-  <span class="pb-label">Moments de calme</span>
-  <div class="pb-track"><div class="pb-fill" id="pb-fill" style="width:0%"></div></div>
-  <span class="pb-count" id="pb-count">0 moment</span>
-</div>
+<!-- ═══════════ MOMENTS ══════════ -->
+<div class="moments-zone" id="moments-grid"></div>
 
 <!-- ═══════════ TABS ═════════════ -->
 <div class="tabs-rail">
@@ -1198,7 +1214,6 @@ details[open] summary::after { content: '−'; }
   <div class="panel w1 on" id="p-w1">
 
     <div class="wk-head">
-      <div class="wk-badge"><span>S</span><span class="bnum">1</span></div>
       <div class="wk-meta">
         <span class="wk-over">Jours 1 à 7</span>
         <div class="wk-title">Je pose le rythme</div>
@@ -1229,8 +1244,6 @@ details[open] summary::after { content: '−'; }
       </div>
     </div>
 
-    <div class="days-grid" id="dg-w1"></div>
-
     <div class="recap-block">
       <h3>Semaine 1 en un coup d'œil</h3>
       <div class="recap-cols">
@@ -1250,7 +1263,6 @@ details[open] summary::after { content: '−'; }
   <div class="panel w2" id="p-w2">
 
     <div class="wk-head">
-      <div class="wk-badge"><span>S</span><span class="bnum">2</span></div>
       <div class="wk-meta">
         <span class="wk-over">Jours 8 à 14</span>
         <div class="wk-title">Je pose l'attention</div>
@@ -1281,8 +1293,6 @@ details[open] summary::after { content: '−'; }
       </div>
     </div>
 
-    <div class="days-grid" id="dg-w2"></div>
-
     <div class="recap-block">
       <h3>Semaine 2 en un coup d'œil</h3>
       <div class="recap-cols">
@@ -1302,7 +1312,6 @@ details[open] summary::after { content: '−'; }
   <div class="panel w3" id="p-w3">
 
     <div class="wk-head">
-      <div class="wk-badge"><span>S</span><span class="bnum">3</span></div>
       <div class="wk-meta">
         <span class="wk-over">Jours 15 à 21</span>
         <div class="wk-title">Je laisse entrer la douceur</div>
@@ -1333,8 +1342,6 @@ details[open] summary::after { content: '−'; }
       </div>
     </div>
 
-    <div class="days-grid" id="dg-w3"></div>
-
     <div class="recap-block">
       <h3>Semaine 3 en un coup d'œil</h3>
       <div class="recap-cols">
@@ -1354,7 +1361,6 @@ details[open] summary::after { content: '−'; }
   <div class="panel w4" id="p-w4">
 
     <div class="wk-head">
-      <div class="wk-badge"><span>S</span><span class="bnum">4</span></div>
       <div class="wk-meta">
         <span class="wk-over">Jours 22 à 28</span>
         <div class="wk-title">Je vis autrement</div>
@@ -1426,8 +1432,6 @@ details[open] summary::after { content: '−'; }
       </div>
 
     </div>
-
-    <div class="days-grid" id="dg-w4"></div>
 
     <div class="recap-block">
       <h3>Semaine 4 en un coup d'œil</h3>
@@ -1617,35 +1621,27 @@ details[open] summary::after { content: '−'; }
 <script>
 /* ── State ── */
 const SK = 'rc_v1';
-let done = JSON.parse(localStorage.getItem(SK) || '[]');
+function safeGet(key, fallback) {
+  try { return JSON.parse(localStorage.getItem(key)) ?? fallback; }
+  catch { localStorage.removeItem(key); return fallback; }
+}
+let done = safeGet(SK, []);
 
 function persist() {
   localStorage.setItem(SK, JSON.stringify(done));
-  refreshProgress();
+  buildMoments();
 }
 
-function refreshProgress() {
-  const n = done.length;
-  const pct = Math.round(n / 28 * 100);
-  document.getElementById('pb-fill').style.width = pct + '%';
-  document.getElementById('pb-count').textContent = n + (n <= 1 ? ' moment' : ' moments');
-}
-
-/* ── Day grids ── */
-function buildGrid(panelId, weekNum) {
-  const wrap = document.getElementById('dg-' + panelId);
-  if (!wrap) return;
-  wrap.innerHTML = '';
-  const start = (weekNum - 1) * 7 + 1;
-  for (let i = 0; i < 7; i++) {
-    const d = start + i;
-    const isDone = done.includes(d);
+function buildMoments() {
+  const grid = document.getElementById('moments-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  for (let d = 1; d <= 28; d++) {
     const el = document.createElement('div');
-    el.className = 'day' + (isDone ? ' done' : '');
-    el.id = 'day-' + d;
-    el.onclick = () => toggleDay(d);
-    el.textContent = isDone ? '✓' : '◦';
-    wrap.appendChild(el);
+    el.className = 'mdot' + (done.includes(d) ? ' done' : '');
+    el.id = 'mdot-' + d;
+    el.onclick = () => toggleMoment(d);
+    grid.appendChild(el);
   }
 }
 
@@ -1653,13 +1649,12 @@ function autoValidateNextDay() {
   for (let d = 1; d <= 28; d++) {
     if (!done.includes(d)) {
       done.push(d);
-      persist();
-      const el = document.getElementById('day-' + d);
+      localStorage.setItem(SK, JSON.stringify(done));
+      buildMoments();
+      const el = document.getElementById('mdot-' + d);
       if (el) {
-        el.className = 'day done';
-        el.textContent = '✓';
-        el.style.transition = 'transform .4s ease, background .4s ease';
-        el.style.transform = 'scale(1.15)';
+        el.style.transition = 'transform .4s ease';
+        el.style.transform = 'scale(1.5)';
         setTimeout(() => { el.style.transform = ''; }, 400);
       }
       break;
@@ -1667,15 +1662,10 @@ function autoValidateNextDay() {
   }
 }
 
-function toggleDay(d) {
+function toggleMoment(d) {
   const idx = done.indexOf(d);
   if (idx >= 0) done.splice(idx, 1); else done.push(d);
   persist();
-  const el = document.getElementById('day-' + d);
-  if (!el) return;
-  const isDone = done.includes(d);
-  el.className = 'day' + (isDone ? ' done' : '');
-  el.textContent = isDone ? '✓' : '◦';
 }
 
 /* ── Tabs ── */
@@ -1725,7 +1715,7 @@ function ensureReverb() {
 
 /* ── Settings ── */
 const SK_PREFS = 'rc_prefs_v1';
-let prefs = JSON.parse(localStorage.getItem(SK_PREFS) || '{"sound":true,"vol":0.8,"timer":true}');
+let prefs = safeGet(SK_PREFS, { sound: true, vol: 0.8, timer: true });
 
 function savePrefs() { localStorage.setItem(SK_PREFS, JSON.stringify(prefs)); }
 
@@ -1776,6 +1766,8 @@ function copyLink() {
   navigator.clipboard.writeText(SHARE_URL).then(() => {
     const lbl = document.querySelector('#copy-btn span:last-child');
     if (lbl) { lbl.textContent = 'Copié !'; setTimeout(() => lbl.textContent = 'Copier', 2000); }
+  }).catch(() => {
+    try { document.execCommand('copy'); } catch(e) {}
   });
 }
 
@@ -1810,7 +1802,10 @@ function makeBowl(freq, startAt, vol, dur = 2.4) {
   gain.gain.linearRampToValueAtTime(vol, startAt + 0.012);
   gain.gain.exponentialRampToValueAtTime(0.001, startAt + dur);
   osc.start(startAt);
-  osc.stop(startAt + dur + 2.0);  /* laisser les échos s'éteindre */
+  osc.stop(startAt + dur + 2.0);
+  osc.addEventListener('ended', () => {
+    gain.disconnect(); delay.disconnect(); fbGain.disconnect(); wetGain.disconnect();
+  });
 }
 
 async function playBowl(isInhale) {
@@ -1822,7 +1817,7 @@ async function playBowl(isInhale) {
 }
 
 async function playCompletion() {
-  if (!audioCtx) return;
+  if (!soundOn || !audioCtx) return;
   try {
     if (audioCtx.state !== 'running') await audioCtx.resume();
     const now   = audioCtx.currentTime;
@@ -1897,6 +1892,16 @@ function syncFs(id) {
   }
 }
 
+function fsSoundToggle() {
+  prefs.sound = !prefs.sound;
+  soundOn = prefs.sound;
+  savePrefs();
+  const btn = document.getElementById('fs-sound-btn');
+  if (btn) btn.classList.toggle('muted', !soundOn);
+  const sndEl = document.getElementById('snd-toggle');
+  if (sndEl) sndEl.checked = soundOn;
+}
+
 function openFs(id, dur) {
   const bt   = document.getElementById('bt-' + id);
   const exEl = bt ? bt.closest('.ex') : null;
@@ -1915,6 +1920,8 @@ function openFs(id, dur) {
   fsOrb.classList.remove('inhale','exhale','complete');
   document.getElementById('fs-overlay').dataset.week = idToWeek(id);
   fsActive = true; fsId = id; fsDur = dur;
+  const sndBtn = document.getElementById('fs-sound-btn');
+  if (sndBtn) sndBtn.classList.toggle('muted', !soundOn);
   document.getElementById('fs-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
   startT(id, dur);
@@ -1927,7 +1934,7 @@ function closeFs() {
   document.body.style.overflow = '';
 }
 
-function fsBtnClick() { if (fsId) startT(fsId, fsDur); }
+function fsBtnClick() { if (fsId && fsDur) startT(fsId, fsDur); }
 function fsResetClick() { if (fsId && fsDur) resetT(fsId, fsDur); }
 
 function fmt(s) {
@@ -1999,9 +2006,25 @@ function startT(id, dur) {
     TM[id].breath = setTimeout(breathCycle, 5000);
   }
 
+  const isFreshStart = !TM[id];
   TM[id] = { on: true, rem, phase };
   syncFs(id);
-  breathCycle();
+
+  if (isFreshStart) {
+    const fsPhaseEl = document.getElementById('fs-phase');
+    const msg1 = 'Installez-vous…';
+    const msg2 = 'Respirez librement.';
+    if (bl) bl.textContent = msg1;
+    if (fsPhaseEl) { fsPhaseEl.textContent = msg1; fsPhaseEl.style.transform = 'scale(1)'; }
+    setTimeout(() => {
+      if (!TM[id]?.on) return;
+      if (bl) bl.textContent = msg2;
+      if (fsPhaseEl) fsPhaseEl.textContent = msg2;
+    }, 2500);
+    TM[id].breath = setTimeout(breathCycle, 5000);
+  } else {
+    breathCycle();
+  }
 
   TM[id].iv = setInterval(() => {
     rem--;
@@ -2061,12 +2084,7 @@ function resetT(id, dur) {
 }
 
 /* ── Init ── */
-buildGrid('w1', 1);
-buildGrid('w2', 2);
-buildGrid('w3', 3);
-buildGrid('w4', 4);
-refreshProgress();
-initSettings();
+buildMoments();
 </script>
 
 <!-- ═══════════════════════════════
@@ -2074,6 +2092,7 @@ initSettings();
 ════════════════════════════════ -->
 <!-- ═══════════ FULLSCREEN PLAYER ════════ -->
 <div id="fs-overlay">
+  <button id="fs-sound-btn" onclick="fsSoundToggle()" aria-label="Son">♫</button>
   <button id="fs-close" onclick="closeFs()" aria-label="Fermer">✕</button>
   <div id="fs-title"></div>
   <div id="fs-orb-wrap">
@@ -2140,6 +2159,7 @@ initSettings();
     </div>
   </div>
 </div>
+<script>initSettings();</script>
 
 <div id="onboard-overlay">
   <div id="onboard-card">
@@ -2148,6 +2168,17 @@ initSettings();
     <p>La cohérence cardiaque guide votre cœur vers son rythme naturel — là où l'anxiété s'allège, les pensées se clarifient et la paix intérieure s'installe.</p>
     <p>Quelques minutes par jour suffisent. Votre corps sait déjà comment — laissez-le se souvenir.</p>
     <button id="onboard-ok">Je commence</button>
+  </div>
+</div>
+
+<div id="welcome-overlay">
+  <div id="welcome-card">
+    <div class="ob-accent"></div>
+    <h2>Bienvenue</h2>
+    <p>Commencez par 3 grandes respirations pour relâcher les premières tensions du corps et de l'esprit.</p>
+    <p class="wc-dur">30 secondes · Trois Souffles</p>
+    <button id="welcome-ok">Commencer</button>
+    <button id="welcome-skip">Passer</button>
   </div>
 </div>
 
@@ -2249,6 +2280,29 @@ setTimeout(requestNotifPermission, 30000);
     localStorage.setItem('rc-onboarded', '1');
     overlay.style.display = 'none';
   });
+})();
+
+/* ── Bienvenue respiratoire (1x/jour · 6h–20h) ── */
+(function() {
+  if (!localStorage.getItem('rc-onboarded')) return;
+  const now = new Date();
+  const h = now.getHours();
+  if (h < 6 || h >= 20) return;
+  const today = now.toDateString();
+  if (localStorage.getItem('rc-welcome-date') === today) return;
+
+  const wOverlay = document.getElementById('welcome-overlay');
+  setTimeout(() => { wOverlay.style.display = 'flex'; }, 1200);
+
+  function dismissWelcome() {
+    localStorage.setItem('rc-welcome-date', today);
+    wOverlay.style.display = 'none';
+  }
+  document.getElementById('welcome-ok').addEventListener('click', () => {
+    dismissWelcome();
+    openFs('4b', 30);
+  });
+  document.getElementById('welcome-skip').addEventListener('click', dismissWelcome);
 })();
 </script>
 </body>
